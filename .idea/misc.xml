@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/brew_buttons_backgroundd.xml" value="0.2085" />
+        <entry key="app/src/main/res/drawable/brew_buttons_text.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/dr_bottomnavigation_topactivebar.xml" value="0.2085" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.11930091185410334" />
         <entry key="app/src/main/res/layout/fragment_brew.xml" value="0.11930091185410334" />
