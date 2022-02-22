@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:textColor="@color/onPrimary"
-        android:text="Good Morning," />
+        android:text="@string/brew_goodmorning" />
 
     <TextView
         android:id="@+id/firstname"
@@ -47,7 +47,7 @@
         android:layout_below="@id/coffeecup"
         android:textSize="18sp"
         android:textColor="@color/onPrimary"
-        android:text="Roast Type" />
+        android:text="@string/brew_roasttype" />
 
     <RelativeLayout
         android:id="@+id/roast_buttons"
@@ -58,14 +58,14 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_roast_light"
-            android:onClick="expandButton"
+            android:onClick=""
             android:layout_width="50dp"
             android:layout_height="60dp"
             android:layout_margin="10dp"
             android:backgroundTint="@drawable/brew_buttons_background"
             android:padding="0dp"
             android:elevation="30dp"
-            android:text="L"
+            android:text="@string/brew_roasttype_l"
             android:textSize="18sp"
             android:textColor="@drawable/brew_buttons_text"
             app:cornerRadius="16dp"
@@ -81,7 +81,7 @@
             android:backgroundTint="@drawable/brew_buttons_background"
             android:padding="0dp"
             android:elevation="30dp"
-            android:text="M"
+            android:text="@string/brew_roasttype_m"
             android:textSize="18sp"
             android:textColor="@drawable/brew_buttons_text"
             app:cornerRadius="16dp"
@@ -97,7 +97,7 @@
             android:backgroundTint="@drawable/brew_buttons_background"
             android:padding="0dp"
             android:elevation="30dp"
-            android:text="MD"
+            android:text="@string/brew_roasttype_md"
             android:textSize="18sp"
             android:textColor="@drawable/brew_buttons_text"
             app:cornerRadius="16dp"
@@ -109,11 +109,11 @@
             android:layout_width="50dp"
             android:layout_height="60dp"
             android:layout_margin="10dp"
-            android:layout_toRightOf="@id/button_roast_mediumdark"
+            android:layout_toEndOf="@id/button_roast_mediumdark"
             android:backgroundTint="@drawable/brew_buttons_background"
             android:padding="0dp"
             android:elevation="30dp"
-            android:text="D"
+            android:text="@string/brew_roasttype_d"
             android:textSize="18sp"
             android:textColor="@drawable/brew_buttons_text"
             app:cornerRadius="16dp"
@@ -129,7 +129,7 @@
         android:layout_below="@id/roast_buttons"
         android:textSize="18sp"
         android:textColor="@color/onPrimary"
-        android:text="Cup Size" />
+        android:text="@string/brew_cupsize" />
 
     <RelativeLayout
         android:id="@+id/cupsize_buttons"
@@ -146,7 +146,7 @@
             android:backgroundTint="@drawable/brew_buttons_background"
             android:padding="0dp"
             android:elevation="30dp"
-            android:text="8 oz"
+            android:text="@string/brew_cupsize_small"
             android:textSize="18sp"
             android:textColor="@drawable/brew_buttons_text"
             app:cornerRadius="16dp"
@@ -162,7 +162,7 @@
             android:backgroundTint="@drawable/brew_buttons_background"
             android:padding="0dp"
             android:elevation="30dp"
-            android:text="16 oz"
+            android:text="@string/brew_cupsize_medium"
             android:textSize="18sp"
             android:textColor="@drawable/brew_buttons_text"
             app:cornerRadius="16dp"
@@ -178,7 +178,7 @@
             android:backgroundTint="@drawable/brew_buttons_background"
             android:padding="0dp"
             android:elevation="30dp"
-            android:text="20 oz"
+            android:text="@string/brew_cupsize_large"
             android:textSize="18sp"
             android:textColor="@drawable/brew_buttons_text"
             app:cornerRadius="16dp"
@@ -200,7 +200,7 @@
         android:backgroundTint="@color/secondary"
         android:elevation="30dp"
         android:padding="0dp"
-        android:text="Start Brewing"
+        android:text="@string/brew_startbrewing"
         android:textColor="@color/onSecondary"
         android:textSize="18sp"
         app:cornerRadius="32dp"

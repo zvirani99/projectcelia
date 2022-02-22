@@ -2,4 +2,16 @@
     <string name="app_name">Project Celia</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="brew_goodmorning">Good Morning,</string>
+    <string name="brew_roasttype">Roast Type</string>
+    <string name="brew_roasttype_l">L</string>
+    <string name="brew_roasttype_m">M</string>
+    <string name="brew_roasttype_md">MD</string>
+    <string name="brew_roasttype_d">D</string>
+    <string name="brew_cupsize">Cup Size</string>
+    <string name="brew_cupsize_small">8 oz</string>
+    <string name="brew_cupsize_medium">16 oz</string>
+    <string name="brew_cupsize_large">20 oz</string>
+    <string name="brew_startbrewing">Start Brewing</string>
 </resources>
