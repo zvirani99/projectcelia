@@ -25,7 +25,7 @@ public class HistoryFragment extends Fragment {
     Context context;
     RecyclerView historyLayout;
 
-    String[] brewHistory_dates, brewHistory_roasttypes, brewHistory_ratings;
+    String[] brewHistory_ids, brewHistory_dates, brewHistory_roasttypes, brewHistory_ratings;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -41,13 +41,14 @@ public class HistoryFragment extends Fragment {
 
         historyLayout = (RecyclerView) view.findViewById(R.id.brew_history_list);
 
-        // For testing purposes : START
+        // Testing Data : START
+        brewHistory_ids = new String[]{"1", "2", "1", "2", "1", "2", "1", "2", "1"};
         brewHistory_dates = new String[]{"Dec 28, 2018", "Dec 29, 2018", "Dec 30, 2018", "Dec 28, 2018", "Dec 29, 2018", "Dec 30, 2018", "Dec 28, 2018", "Dec 29, 2018", "Dec 30, 2018"};
         brewHistory_roasttypes = new String[]{"Light Roast", "Medium Roast", "Dark Roast", "Light Roast", "Medium Roast", "Dark Roast", "Light Roast", "Medium Roast", "Dark Roast"};
         brewHistory_ratings = new String[]{"null", "7/10", "9/10", "6/10", "7/10", "9/10", "6/10", "7/10", "9/10"};
         // END
 
-        historyLayout.setAdapter( new BrewHistoryListAdapter(context, brewHistory_dates, brewHistory_roasttypes, brewHistory_ratings) );
+        historyLayout.setAdapter( new BrewHistoryListAdapter(context, getParentFragmentManager(), brewHistory_ids, brewHistory_dates, brewHistory_roasttypes, brewHistory_ratings) );
         historyLayout.setLayoutManager( new LinearLayoutManager( context ) );
 
         return view;

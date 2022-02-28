@@ -16,5 +16,18 @@
     <string name="brew_startbrewing">Start Brewing</string>
     <string name="history_clicktorate">Click to Rate!</string>
     <string name="history_brewinghistory">Brewing History</string>
+    <string name="settings_heading">Settings</string>
+    <string name="settings_account">Account</string>
+    <string name="settings_editprofile">Edit Profile</string>
+    <string name="settings_changepassword">Change Password</string>
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_brewingstatus">Brewing Status</string>
+    <string name="settings_maintenancereminder">Maintenance Reminders</string>
+    <string name="settings_device">Device</string>
+    <string name="settings_deviceinformation">Device Information</string>
+    <string name="settings_helpandsupport">Help and Support</string>
+    <string name="settings_frequentlyaskedquestions">Frequently Asked Questions</string>
+    <string name="settings_contactsupport">Contact Support</string>
+
 
 </resources>

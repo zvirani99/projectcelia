@@ -19,7 +19,7 @@
         android:textColor="@color/onPrimary"
         android:layout_marginBottom="24dp"
         android:textStyle="bold"
-        android:text="Settings" />
+        android:text="@string/settings_heading" />
 
 <!--Account Heading-->
     <TextView
@@ -30,7 +30,7 @@
         android:textSize="20sp"
         android:textColor="@color/onPrimary"
         android:textStyle="bold"
-        android:text="Account" />
+        android:text="@string/settings_account" />
 <!--    Edit Profile-->
     <Button
         android:id="@+id/settings_editprofile_button"
@@ -49,7 +49,7 @@
         android:textAllCaps="false"
         android:textAlignment="textStart"
         android:letterSpacing="0"
-        android:text="Edit Profile"/>
+        android:text="@string/settings_editprofile"/>
 
     <View
         android:id="@+id/settings_divide_1"
@@ -76,7 +76,7 @@
         android:textAllCaps="false"
         android:textAlignment="textStart"
         android:letterSpacing="0"
-        android:text="Change Password"/>
+        android:text="@string/settings_changepassword"/>
 
     <View
         android:id="@+id/settings_divide_2"
@@ -95,7 +95,7 @@
         android:textSize="20sp"
         android:textColor="@color/onPrimary"
         android:textStyle="bold"
-        android:text="Notifications" />
+        android:text="@string/settings_notifications" />
 <!--    Brewing Status-->
     <TextView
         android:id="@+id/settings_brewingstatus_text"
@@ -105,13 +105,14 @@
         android:layout_marginTop="10dp"
         android:textSize="18sp"
         android:textColor="@color/onPrimary"
-        android:text="Brewing Status" />
+        android:text="@string/settings_brewingstatus" />
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/settings_brewingstatus_toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/notifications_heading"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentEnd="true"
+        android:theme="@style/Theme.ProjectCelia.Switch"/>
     <View
         android:id="@+id/settings_divide_3"
         android:layout_width="match_parent"
@@ -128,13 +129,14 @@
         android:layout_marginTop="10dp"
         android:textSize="18sp"
         android:textColor="@color/onPrimary"
-        android:text="Maintenance Reminders" />
+        android:text="@string/settings_maintenancereminder" />
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/settings_maintenance_toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/settings_brewingstatus_toggle"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentEnd="true"
+        android:theme="@style/Theme.ProjectCelia.Switch"/>
     <View
         android:id="@+id/settings_divide_4"
         android:layout_width="match_parent"
@@ -152,7 +154,7 @@
         android:textSize="20sp"
         android:textColor="@color/onPrimary"
         android:textStyle="bold"
-        android:text="Device" />
+        android:text="@string/settings_device" />
 <!--    Device Information-->
     <Button
         android:id="@+id/settings_deviceinfo_button"
@@ -171,7 +173,7 @@
         android:textAllCaps="false"
         android:textAlignment="textStart"
         android:letterSpacing="0"
-        android:text="Device Information"/>
+        android:text="@string/settings_deviceinformation"/>
 
     <View
         android:id="@+id/settings_divide_5"
@@ -190,7 +192,7 @@
         android:textSize="20sp"
         android:textColor="@color/onPrimary"
         android:textStyle="bold"
-        android:text="Help and Support" />
+        android:text="@string/settings_helpandsupport" />
 <!--    FAQ-->
     <Button
         android:id="@+id/settings_faq_button"
@@ -209,7 +211,7 @@
         android:textAllCaps="false"
         android:textAlignment="textStart"
         android:letterSpacing="0"
-        android:text="Frequently Asked Questions"/>
+        android:text="@string/settings_frequentlyaskedquestions"/>
 
     <View
         android:id="@+id/settings_divide_7"
@@ -235,7 +237,7 @@
         android:textAllCaps="false"
         android:textAlignment="textStart"
         android:letterSpacing="0"
-        android:text="Contact Support"/>
+        android:text="@string/settings_contactsupport"/>
 
     <View
         android:id="@+id/settings_divide_8"
