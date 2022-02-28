@@ -7,8 +7,9 @@
         <entry key="app/src/main/res/drawable/brew_buttons_text.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/dr_bottomnavigation_topactivebar.xml" value="0.2085" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.11930091185410334" />
+        <entry key="app/src/main/res/layout/brew_history_card.xml" value="0.13148148148148148" />
         <entry key="app/src/main/res/layout/fragment_brew.xml" value="0.11930091185410334" />
-        <entry key="app/src/main/res/layout/fragment_history.xml" value="0.11930091185410334" />
+        <entry key="app/src/main/res/layout/fragment_history.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.11930091185410334" />
         <entry key="app/src/main/res/menu/menu_bottomnavigation.xml" value="0.2" />
       </map>

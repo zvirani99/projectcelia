@@ -14,4 +14,7 @@
     <string name="brew_cupsize_medium">16 oz</string>
     <string name="brew_cupsize_large">20 oz</string>
     <string name="brew_startbrewing">Start Brewing</string>
+    <string name="history_clicktorate">Click to Rate!</string>
+    <string name="history_brewinghistory">Brewing History</string>
+
 </resources>
