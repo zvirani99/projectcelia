@@ -1,8 +1,10 @@
 package com.zeeshanvirani.projectcelia;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +13,7 @@ import android.widget.Button;
 
 public class BrewFragment extends Fragment {
 
-    // Define component variables
+    // Define view variables
     private Button roast_light_btn;
     private Button roast_medium_btn;
     private Button roast_mediumdark_btn;
@@ -21,10 +23,14 @@ public class BrewFragment extends Fragment {
     private Button cupsize_med_btn;
     private Button cupsize_large_btn;
 
-    public BrewFragment() {
-        // Required empty public constructor
-    }
+    private Button start_brew_btn;
 
+    // Required empty public constructor
+    public BrewFragment() {}
+
+    // Called when view is put onto the screen
+    // Takes in instance of LayoutInflater, the ViewGroup that the fragment will live in,
+    // and a Bundle
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -32,7 +38,7 @@ public class BrewFragment extends Fragment {
         // Inflate layout and set variable
         View view = inflater.inflate(R.layout.fragment_brew, container, false);
 
-        // Initialize components within view
+        // Initialize views within ViewGroup
         roast_light_btn = (Button) view.findViewById(R.id.button_roast_light);
         roast_medium_btn = (Button) view.findViewById(R.id.button_roast_medium);
         roast_mediumdark_btn = (Button) view.findViewById(R.id.button_roast_mediumdark);
@@ -42,8 +48,10 @@ public class BrewFragment extends Fragment {
         cupsize_med_btn = (Button) view.findViewById(R.id.button_cupsize_16oz);
         cupsize_large_btn = (Button) view.findViewById(R.id.button_cupsize_20oz);
 
+        start_brew_btn = (Button) view.findViewById(R.id.button_startbrew);
+
         // On Click Listener for Roast Type Buttons and Cup Size Buttons
-        // Checks if already selected and unselects it
+        // Checks if button already selected and unselects it
         // Otherwise selects it and unselects other options
         roast_light_btn.setOnClickListener(view1 -> {
             if ( roast_light_btn.isSelected() ) {

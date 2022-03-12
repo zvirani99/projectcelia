@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:layout="@layout/fragment_settings" />
+
+    <PreferenceCategory android:title="Account">
+
+<!--        Edit Profile-->
+        <Preference
+            android:title="Edit Profile" />
+<!--        Change Password-->
+        <EditTextPreference
+            android:dialogTitle="Enter new password"
+            android:key="profile_password"
+            android:title="Change Password" />
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Notifications">
+
+<!--        Brewing Status-->
+        <SwitchPreference
+            android:key="notifications_brewing_status"
+            android:title="Brewing Status"
+            android:defaultValue="true" />
+<!--        Maintenance Reminders-->
+        <SwitchPreference
+            android:key="notifications_maintenance_reminders"
+            android:title="Maintenance Reminders"
+            android:defaultValue="true" />
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Device">
+
+        <Preference
+            android:title="Device Information" />
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Help and Support">
+
+        <Preference
+            android:title="Frequently Asked Questions" />
+
+        <Preference
+            android:title="Contact Us" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

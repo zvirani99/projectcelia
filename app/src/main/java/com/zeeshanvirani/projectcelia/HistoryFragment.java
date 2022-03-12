@@ -25,29 +25,35 @@ public class HistoryFragment extends Fragment {
     Context context;
     RecyclerView historyLayout;
 
+    // Data arrays for data gathered from database
     String[] brewHistory_ids, brewHistory_dates, brewHistory_roasttypes, brewHistory_ratings;
 
-    public HistoryFragment() {
-        // Required empty public constructor
-    }
+    // Required empty public constructor
+    public HistoryFragment() {}
 
+    // Called when Fragment is put onto screen
+    // Takes in instance of LayoutInflater, the ViewGroup that the fragment will live in,
+    // and a Bundle
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_history, container, false);
 
+        // Set context to application context for use elsewhere
         context = getActivity().getApplicationContext();
 
+        // Initialize views within ViewGroup
         historyLayout = (RecyclerView) view.findViewById(R.id.brew_history_list);
 
-        // Testing Data : START
-        brewHistory_ids = new String[]{"1", "2", "1", "2", "1", "2", "1", "2", "1"};
-        brewHistory_dates = new String[]{"Dec 28, 2018", "Dec 29, 2018", "Dec 30, 2018", "Dec 28, 2018", "Dec 29, 2018", "Dec 30, 2018", "Dec 28, 2018", "Dec 29, 2018", "Dec 30, 2018"};
-        brewHistory_roasttypes = new String[]{"Light Roast", "Medium Roast", "Dark Roast", "Light Roast", "Medium Roast", "Dark Roast", "Light Roast", "Medium Roast", "Dark Roast"};
-        brewHistory_ratings = new String[]{"null", "7/10", "9/10", "6/10", "7/10", "9/10", "6/10", "7/10", "9/10"};
-        // END
+        // Get data from database and sort into its proper arrays
+        brewHistory_ids = TempDatabaseClass.brewHistory_ids;
+        brewHistory_dates = TempDatabaseClass.brewHistory_dates;
+        brewHistory_roasttypes = TempDatabaseClass.brewHistory_roasttypes;
+        brewHistory_ratings = TempDatabaseClass.brewHistory_ratings;
 
+        // Set adapter and layout manager for recycler view
+        // This will automate the creation and filling of data on the page
         historyLayout.setAdapter( new BrewHistoryListAdapter(context, getParentFragmentManager(), brewHistory_ids, brewHistory_dates, brewHistory_roasttypes, brewHistory_ratings) );
         historyLayout.setLayoutManager( new LinearLayoutManager( context ) );
 
