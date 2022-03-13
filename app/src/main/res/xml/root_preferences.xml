@@ -7,9 +7,16 @@
 
     <PreferenceCategory android:title="Account">
 
-<!--        Edit Profile-->
-        <Preference
-            android:title="Edit Profile" />
+<!--        Change Name-->
+        <EditTextPreference
+            android:title="Your Name"
+            android:key="account_name"
+            android:dialogTitle="Enter your name" />
+<!--        Change Email-->
+        <EditTextPreference
+            android:title="Change Email"
+            android:key="account_password"
+            android:dialogTitle="Enter new email" />
 <!--        Change Password-->
         <EditTextPreference
             android:dialogTitle="Enter new password"

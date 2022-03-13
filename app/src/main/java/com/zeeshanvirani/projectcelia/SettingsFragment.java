@@ -2,13 +2,11 @@ package com.zeeshanvirani.projectcelia;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
+import androidx.annotation.NonNull;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.preference.PreferenceFragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
@@ -18,7 +16,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        setPreferencesFromResource(R.xml.settingsfragment, rootKey);
+        setPreferencesFromResource(R.xml.root_preferences, rootKey);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        final RecyclerView rv = getListView(); // This holds the PreferenceScreen's items
+        rv.setPadding(0, 0, 0, 56); // (left, top, right, bottom)
     }
 
 //    @Override

@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/drawable/brew_buttons_text.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/dr_bottomnavigation_topactivebar.xml" value="0.2085" />
         <entry key="app/src/main/res/layout/activity_launch.xml" value="0.16530797101449277" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.22314814814814815" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.11930091185410334" />
         <entry key="app/src/main/res/layout/brew_history_card.xml" value="0.13148148148148148" />
         <entry key="app/src/main/res/layout/fragment_brew.xml" value="0.11930091185410334" />
@@ -15,7 +16,7 @@
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.11930091185410334" />
         <entry key="app/src/main/res/layout/rate_coffee_dialog.xml" value="0.16530797101449277" />
         <entry key="app/src/main/res/menu/menu_bottomnavigation.xml" value="0.2" />
-        <entry key="app/src/main/res/xml/settingsfragment.xml" value="0.16530797101449277" />
+        <entry key="app/src/main/res/xml/settingsfragment.xml" value="0.1" />
       </map>
     </option>
   </component>

@@ -32,12 +32,15 @@ public class LaunchActivity extends AppCompatActivity {
         createaccount_btn = findViewById(R.id.button_createaccount);
         login_btn = findViewById(R.id.button_login);
         login_btn.setOnClickListener(view -> {
-            editor.putBoolean("isLoggedIn", true);
-            editor.apply();
+            // Switch to Login Activity so that user can login with their account info
+//            editor.putBoolean("isLoggedIn", true);
+//            editor.apply();
+            startActivity( new Intent(this, LoginActivity.class) );
         });
 
         demomode_btn = findViewById(R.id.button_demomode);
         demomode_btn.setOnClickListener(view -> {
+            // Temporary button to allow app access without account or connected device
             Intent newActivity = new Intent(this, MainActivity.class);
             startActivity(newActivity);
         });

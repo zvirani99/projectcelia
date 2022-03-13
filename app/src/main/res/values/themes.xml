@@ -35,4 +35,11 @@
         <item name="android:colorForeground">#42221f1f</item>
     </style>
 
+    <style name="Theme.ProjectCelia.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/colors_textinputlayout</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxBackgroundColor">@color/primary</item>
+        <item name="hintTextColor">@color/secondary</item>
+    </style>
+
 </resources>
