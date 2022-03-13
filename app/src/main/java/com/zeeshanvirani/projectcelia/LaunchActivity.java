@@ -27,14 +27,15 @@ public class LaunchActivity extends AppCompatActivity {
             startActivity(newActivity);
         }
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
         createaccount_btn = findViewById(R.id.button_createaccount);
+        createaccount_btn.setOnClickListener( view -> {
+            // Switch to Create Account Activity so user can create their new account
+
+        });
+
         login_btn = findViewById(R.id.button_login);
         login_btn.setOnClickListener(view -> {
             // Switch to Login Activity so that user can login with their account info
-//            editor.putBoolean("isLoggedIn", true);
-//            editor.apply();
             startActivity( new Intent(this, LoginActivity.class) );
         });
 
