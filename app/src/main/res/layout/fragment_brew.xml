@@ -60,7 +60,6 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_roast_light"
-            android:onClick=""
             android:layout_width="50dp"
             android:layout_height="60dp"
             android:layout_margin="10dp"
@@ -73,7 +72,7 @@
             android:textColor="@drawable/brew_buttons_text"
             app:cornerRadius="16dp"
             app:strokeColor="@color/secondary"
-            app:strokeWidth="2dp" />
+            app:strokeWidth="1dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_roast_medium"
@@ -90,7 +89,7 @@
             android:textColor="@drawable/brew_buttons_text"
             app:cornerRadius="16dp"
             app:strokeColor="@color/secondary"
-            app:strokeWidth="2dp" />
+            app:strokeWidth="1dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_roast_mediumdark"
@@ -107,7 +106,7 @@
             android:textColor="@drawable/brew_buttons_text"
             app:cornerRadius="16dp"
             app:strokeColor="@color/secondary"
-            app:strokeWidth="2dp" />
+            app:strokeWidth="1dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_roast_dark"
@@ -117,14 +116,14 @@
             android:layout_toEndOf="@id/button_roast_mediumdark"
             android:backgroundTint="@drawable/brew_buttons_background"
             android:padding="0dp"
-            android:elevation="30dp"
+            android:elevation="100dp"
             android:text="@string/brew_roasttype_d"
             android:letterSpacing="0"
             android:textSize="18sp"
             android:textColor="@drawable/brew_buttons_text"
             app:cornerRadius="16dp"
             app:strokeColor="@color/secondary"
-            app:strokeWidth="2dp" />
+            app:strokeWidth="1dp" />
 
     </RelativeLayout>
 
@@ -158,7 +157,7 @@
             android:textColor="@drawable/brew_buttons_text"
             app:cornerRadius="16dp"
             app:strokeColor="@color/secondary"
-            app:strokeWidth="2dp" />
+            app:strokeWidth="1dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_cupsize_16oz"
@@ -175,7 +174,7 @@
             android:textColor="@drawable/brew_buttons_text"
             app:cornerRadius="16dp"
             app:strokeColor="@color/secondary"
-            app:strokeWidth="2dp" />
+            app:strokeWidth="1dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_cupsize_20oz"
@@ -192,7 +191,7 @@
             android:textColor="@drawable/brew_buttons_text"
             app:cornerRadius="16dp"
             app:strokeColor="@color/secondary"
-            app:strokeWidth="2dp" />
+            app:strokeWidth="1dp" />
 
     </RelativeLayout>
 
