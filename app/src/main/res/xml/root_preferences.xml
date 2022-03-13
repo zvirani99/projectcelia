@@ -1,56 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:iconSpaceReserved="false" >
 
-    <Preference
-        android:layout="@layout/fragment_settings" />
+    <PreferenceCategory android:title="Account" app:iconSpaceReserved="false">
 
-    <PreferenceCategory android:title="Account">
-
-<!--        Change Name-->
+        <!--        Change Name-->
         <EditTextPreference
-            android:title="Your Name"
+            android:dialogTitle="Enter your name"
             android:key="account_name"
-            android:dialogTitle="Enter your name" />
-<!--        Change Email-->
+            android:title="Your Name"
+            app:iconSpaceReserved="false" />
+        <!--        Change Email-->
         <EditTextPreference
-            android:title="Change Email"
+            android:dialogTitle="Enter new email"
             android:key="account_password"
-            android:dialogTitle="Enter new email" />
-<!--        Change Password-->
+            android:title="Change Email"
+            app:iconSpaceReserved="false"/>
+        <!--        Change Password-->
         <EditTextPreference
             android:dialogTitle="Enter new password"
             android:key="profile_password"
-            android:title="Change Password" />
+            android:title="Change Password"
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
-    <PreferenceCategory android:title="Notifications">
+    <PreferenceCategory android:title="Notifications" app:iconSpaceReserved="false">
 
-<!--        Brewing Status-->
+        <!--        Brewing Status-->
         <SwitchPreference
+            android:defaultValue="true"
             android:key="notifications_brewing_status"
             android:title="Brewing Status"
-            android:defaultValue="true" />
-<!--        Maintenance Reminders-->
+            app:iconSpaceReserved="false"/>
+        <!--        Maintenance Reminders-->
         <SwitchPreference
+            android:defaultValue="true"
             android:key="notifications_maintenance_reminders"
             android:title="Maintenance Reminders"
-            android:defaultValue="true" />
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
-    <PreferenceCategory android:title="Device">
+    <PreferenceCategory android:title="Device" app:iconSpaceReserved="false">
 
         <Preference
-            android:title="Device Information" />
+            android:title="Device Information"
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
-    <PreferenceCategory android:title="Help and Support">
+    <PreferenceCategory android:title="Help and Support" app:iconSpaceReserved="false">
 
-        <Preference
-            android:title="Frequently Asked Questions" />
+        <Preference android:title="Frequently Asked Questions"
+            app:iconSpaceReserved="false"/>
 
-        <Preference
-            android:title="Contact Us" />
+        <Preference android:title="Contact Us"
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
 

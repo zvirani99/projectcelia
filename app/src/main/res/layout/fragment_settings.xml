@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="24dp"
-    android:paddingRight="24dp"
     android:paddingTop="24dp"
+    android:paddingBottom="56dp"
     android:background="@color/primary"
     tools:context=".SettingsFragment" >
 
@@ -14,11 +13,21 @@
         android:id="@+id/settings_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:textSize="24sp"
         android:textColor="@color/onPrimary"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="12dp"
         android:textStyle="bold"
         android:text="@string/settings_heading" />
+
+    <FrameLayout
+        android:id="@+id/settings_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/settings_heading"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        />
 
 <!--&lt;!&ndash;Account Heading&ndash;&gt;-->
 <!--    <TextView-->

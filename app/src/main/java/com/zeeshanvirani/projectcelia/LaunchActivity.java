@@ -30,7 +30,7 @@ public class LaunchActivity extends AppCompatActivity {
         createaccount_btn = findViewById(R.id.button_createaccount);
         createaccount_btn.setOnClickListener( view -> {
             // Switch to Create Account Activity so user can create their new account
-
+            startActivity( new Intent(this, CreateAccountActivity.class) );
         });
 
         login_btn = findViewById(R.id.button_login);
