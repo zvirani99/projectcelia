@@ -39,9 +39,15 @@ public class LaunchActivity extends AppCompatActivity {
             startActivity( new Intent(this, LoginActivity.class) );
         });
 
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         demomode_btn = findViewById(R.id.button_demomode);
         demomode_btn.setOnClickListener(view -> {
-            // Temporary button to allow app access without account or connected device
+            // Sets up app for demoing features
+            editor.putBoolean("demoMode", true);
+            editor.putString("account_name", "Zeeshan Virani");
+            editor.putString("account_email", "demo@admin.com" );
+            editor.putString("account_password","demo");
+            editor.apply();
             Intent newActivity = new Intent(this, MainActivity.class);
             startActivity(newActivity);
         });

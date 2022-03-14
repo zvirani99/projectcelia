@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class BrewFragment extends Fragment {
 
@@ -24,6 +25,8 @@ public class BrewFragment extends Fragment {
     private Button cupsize_large_btn;
 
     private Button start_brew_btn;
+
+    private TextView heading_name;
 
     // Required empty public constructor
     public BrewFragment() {}
@@ -49,6 +52,11 @@ public class BrewFragment extends Fragment {
         cupsize_large_btn = (Button) view.findViewById(R.id.button_cupsize_20oz);
 
         start_brew_btn = (Button) view.findViewById(R.id.button_startbrew);
+
+        heading_name = (TextView) view.findViewById(R.id.firstname);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        String fullName = sharedPreferences.getString("account_name", "");
+        heading_name.setText( fullName.split(" ")[0] );
 
         // On Click Listener for Roast Type Buttons and Cup Size Buttons
         // Checks if button already selected and unselects it

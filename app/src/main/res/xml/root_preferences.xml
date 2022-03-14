@@ -16,13 +16,13 @@
         <!--        Change Email-->
         <EditTextPreference
             android:dialogTitle="Enter new email"
-            android:key="account_password"
+            android:key="account_email"
             android:title="Change Email"
             app:iconSpaceReserved="false"/>
         <!--        Change Password-->
         <EditTextPreference
             android:dialogTitle="Enter new password"
-            android:key="profile_password"
+            android:key="account_password"
             android:title="Change Password"
             app:iconSpaceReserved="false"/>
 
