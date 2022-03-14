@@ -52,10 +52,10 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="Help and Support" app:iconSpaceReserved="false">
 
-        <Preference android:title="Frequently Asked Questions"
-            app:iconSpaceReserved="false"/>
-
-        <Preference android:title="Contact Us"
+        <Preference
+            android:title="Visit our website"
+            android:key="visitwebsite"
+            android:summary="See Frequently Asked Questions and Contact Information"
             app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>

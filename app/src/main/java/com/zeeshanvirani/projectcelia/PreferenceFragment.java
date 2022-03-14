@@ -1,11 +1,17 @@
 package com.zeeshanvirani.projectcelia;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputType;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
+import androidx.preference.SwitchPreference;
 
 public class PreferenceFragment extends PreferenceFragmentCompat {
 
@@ -30,15 +36,27 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
                 return preference.getText();
             }
         });
+        emailPreference.setOnBindEditTextListener( new EditTextPreference.OnBindEditTextListener() {
+            @Override
+            public void onBindEditText(@NonNull EditText editText) {
+                editText.setInputType( InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS );
+            }
+        });
 
         // Change password has a second textbox for confirmation and checks if both fields are same
 
-        // Add on notifications switch being updated to display a snackbar popup
-
         // Device information brings up alertdialog with device information
 
-        // Frequently Asked Questions takes you to a website or something
-
-        // Contact us provides pop up with contact information
+        Preference visitwebsite_preference = findPreference("visitwebsite");
+        visitwebsite_preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("http://www.zeeshanvirani.com/"));
+                startActivity(intent);
+                return true;
+            }
+        });
     }
+
 }
