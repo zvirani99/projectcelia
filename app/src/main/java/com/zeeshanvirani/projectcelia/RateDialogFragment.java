@@ -26,7 +26,7 @@ public class RateDialogFragment extends DialogFragment {
         numberPicker.setMaxValue(10);
         numberPicker.setMinValue(0);
 
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity(), R.style.RateBrewTheme);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity(), R.style.Theme_ProjectCelia_MaterialAlertDialog);
         builder.setMessage("What would you rate this cup of coffee?")
                 .setPositiveButton("Rate", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
