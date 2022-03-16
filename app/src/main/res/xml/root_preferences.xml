@@ -24,7 +24,13 @@
             android:dialogTitle="Enter new password"
             android:key="account_password"
             android:title="Change Password"
-            app:iconSpaceReserved="false"/>
+            app:iconSpaceReserved="false"
+            app:enabled="false"/>
+<!--        Logout-->
+        <Preference
+            android:title="Sign out"
+            android:key="signout"
+            app:iconSpaceReserved="false" />
 
     </PreferenceCategory>
     <PreferenceCategory android:title="Notifications" app:iconSpaceReserved="false">
@@ -47,7 +53,8 @@
 
         <Preference
             android:title="Device Information"
-            app:iconSpaceReserved="false"/>
+            app:iconSpaceReserved="false"
+            app:enabled="false"/>/>
 
     </PreferenceCategory>
     <PreferenceCategory android:title="Help and Support" app:iconSpaceReserved="false">

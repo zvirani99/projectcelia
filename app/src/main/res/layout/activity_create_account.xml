@@ -31,7 +31,7 @@
 
 <!--    Name-->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/name_textbox"
+        android:id="@+id/name_textbox_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/header_image"
@@ -43,6 +43,7 @@
         >
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name_textbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
@@ -51,10 +52,10 @@
     </com.google.android.material.textfield.TextInputLayout>
     <!--    Email Textbox-->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email_textbox"
+        android:id="@+id/email_textbox_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/name_textbox"
+        android:layout_below="@id/name_textbox_layout"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="15dp"
@@ -64,6 +65,7 @@
         >
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email_textbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
@@ -73,10 +75,10 @@
 
     <!--    Password Textbox-->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password_textbox"
+        android:id="@+id/password_textbox_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/email_textbox"
+        android:layout_below="@id/email_textbox_layout"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         app:startIconDrawable="@drawable/ic_lock"
@@ -85,6 +87,7 @@
         >
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_textbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
@@ -97,7 +100,7 @@
         android:id="@+id/confirmpassword_textbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/password_textbox"
+        android:layout_below="@id/password_textbox_layout"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:layout_marginStart="30dp"

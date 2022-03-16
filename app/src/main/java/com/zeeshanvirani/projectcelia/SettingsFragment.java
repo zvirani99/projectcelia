@@ -14,6 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SettingsFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -62,6 +67,22 @@ public class SettingsFragment extends Fragment implements SharedPreferences.OnSh
                     Snackbar.make(view.findViewById(R.id.settings_heading), "You will no longer be notified about maintenance items.", Snackbar.LENGTH_SHORT)
                             .show();
                 }
+                break;
+
+            case "account_name":
+                String name = sp.getString( "account_name", "" );
+                Map<String, Object> data = new HashMap<>();
+                data.put("firstName", name.split(" ")[0]);
+                data.put("lastName", name.split(" ")[1]);
+
+                FirebaseFirestore.getInstance().collection("users")
+                        .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .set(data);
+                break;
+
+            case "account_email":
+                String newEmail = sp.getString( "account_email", "" );
+                FirebaseAuth.getInstance().getCurrentUser().updateEmail( newEmail );
                 break;
 
         }

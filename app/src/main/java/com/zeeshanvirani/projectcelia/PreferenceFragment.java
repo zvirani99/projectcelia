@@ -13,6 +13,8 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class PreferenceFragment extends PreferenceFragmentCompat {
 
     @Override
@@ -52,8 +54,18 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("http://www.zeeshanvirani.com/"));
+                intent.setData(Uri.parse("http://www.zeeshanvirani.com/")); // CREATE ONE PAGE SITE FOR FAQ AND CONTACT INFO
                 startActivity(intent);
+                return true;
+            }
+        });
+
+        Preference signout_preference = findPreference( "signout" );
+        signout_preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity( new Intent( getActivity().getApplicationContext(), LaunchActivity.class ) );
                 return true;
             }
         });

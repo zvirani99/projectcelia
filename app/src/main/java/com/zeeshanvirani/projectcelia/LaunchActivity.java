@@ -8,7 +8,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class LaunchActivity extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
 
     private Button createaccount_btn;
     private Button login_btn;
@@ -21,10 +25,11 @@ public class LaunchActivity extends AppCompatActivity {
 
         // Check if user is already logged in and switch to MainActivity
         // Otherwise, display launch page
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if ( sharedPreferences.getBoolean("isLoggedIn", false) ) {
-            Intent newActivity = new Intent(this, MainActivity.class);
-            startActivity(newActivity);
+        if ( FirebaseAuth.getInstance().getCurrentUser() != null ) {
+            // UPDATE SHAREDPREFERENCES WITH USER INFORMATION IN CASE IT WAS DELETED
+            startActivity( new Intent(this, MainActivity.class) );
         }
 
         createaccount_btn = findViewById(R.id.button_createaccount);
