@@ -1,10 +1,8 @@
 package com.zeeshanvirani.projectcelia;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -12,49 +10,29 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LaunchActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
-
-    private Button createaccount_btn;
-    private Button login_btn;
-    private Button demomode_btn;
-
+    // Sets up Activity
+    // Checks if user is already logged in and redirects to MainActivity
+    // Otherwise displays current page.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
 
-        // Check if user is already logged in and switch to MainActivity
-        // Otherwise, display launch page
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if ( FirebaseAuth.getInstance().getCurrentUser() != null ) {
-            // UPDATE SHAREDPREFERENCES WITH USER INFORMATION IN CASE IT WAS DELETED
+            DataHandler.updateSharedPreferences( getApplicationContext() );
             startActivity( new Intent(this, MainActivity.class) );
         }
 
-        createaccount_btn = findViewById(R.id.button_createaccount);
-        createaccount_btn.setOnClickListener( view -> {
+        Button createaccount_btn = findViewById(R.id.button_createaccount);
+        createaccount_btn.setOnClickListener(view -> {
             // Switch to Create Account Activity so user can create their new account
             startActivity( new Intent(this, CreateAccountActivity.class) );
         });
 
-        login_btn = findViewById(R.id.button_login);
+        Button login_btn = findViewById(R.id.button_login);
         login_btn.setOnClickListener(view -> {
             // Switch to Login Activity so that user can login with their account info
             startActivity( new Intent(this, LoginActivity.class) );
-        });
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        demomode_btn = findViewById(R.id.button_demomode);
-        demomode_btn.setOnClickListener(view -> {
-            // Sets up app for demoing features
-            editor.putBoolean("demoMode", true);
-            editor.putString("account_name", "Zeeshan Virani");
-            editor.putString("account_email", "demo@admin.com" );
-            editor.putString("account_password","demo");
-            editor.apply();
-            Intent newActivity = new Intent(this, MainActivity.class);
-            startActivity(newActivity);
         });
 
     }

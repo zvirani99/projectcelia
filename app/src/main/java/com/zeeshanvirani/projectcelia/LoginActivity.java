@@ -1,100 +1,84 @@
 package com.zeeshanvirani.projectcelia;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Arrays;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private ImageButton back_btn;
-    private Button login_btn;
-
     private TextInputEditText email_textbox;
     private TextInputEditText password_textbox;
-
-    private TextView invalid_text;
-
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        mAuth = FirebaseAuth.getInstance();
-
         email_textbox = (TextInputEditText) findViewById(R.id.email_textbox);
         password_textbox = (TextInputEditText) findViewById(R.id.password_textbox);
 
-        invalid_text = (TextView) findViewById(R.id.invalid_login_text);
-
-        back_btn = (ImageButton) findViewById(R.id.back_button);
+        ImageButton back_btn = (ImageButton) findViewById(R.id.back_button);
         back_btn.setOnClickListener(view -> {
-            // Return to launch activity
+            // Return to LaunchActivity
             startActivity( new Intent(this, LaunchActivity.class) );
         });
 
-        login_btn = (Button) findViewById(R.id.login_button);
-        login_btn.setOnClickListener( view -> {
-            // VERIFY IF FIELDS ARE FILLED WITH PROPER INFORMATION
+        Button login_btn = (Button) findViewById(R.id.login_button);
+        login_btn.setOnClickListener(view -> {
+            // Verify if fields are properly filled in
+            if ( email_textbox.getText() == null
+                    || password_textbox.getText() == null ) { // Text boxes are empty
 
-            mAuth.signInWithEmailAndPassword(email_textbox.getText().toString(), password_textbox.getText().toString())
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = mAuth.getCurrentUser();
+                // Display error message and have user retry login
+                Toast.makeText(getApplicationContext(), "Email and Password fields cannot be empty.",
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
 
-                            // Setup shared preferences
-                            DocumentReference docRef = FirebaseFirestore.getInstance().collection("users")
-                                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    String name = (String) documentSnapshot.get("firstName") + " " + documentSnapshot.get("lastName");
-                                    editor.putString("account_name", name);
-                                    editor.apply();
-                                }
-                            });
-                            editor.putString("account_email", user.getEmail().toString());
-                            editor.apply();
+            if ( !isValidEmail( email_textbox.getText().toString() ) ) { // Invalid email format
+                Toast.makeText(getApplicationContext(), "Please enter a valid email address.",
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
 
-                            startActivity( new Intent(getApplicationContext(), MainActivity.class) );
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
-                        }
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email_textbox.getText().toString(),
+                    password_textbox.getText().toString())
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) { // Sign in success
+                        // Setup shared preferences
+                        DataHandler.updateSharedPreferences( getApplicationContext() );
+                        // Switch to MainActivity
+                        startActivity( new Intent(getApplicationContext(), MainActivity.class) );
+                    } else { // Sign in failed
+                        Toast.makeText(getApplicationContext(), "Invalid email or password. Please try again.",
+                                Toast.LENGTH_LONG).show();
                     }
                 });
 
         });
 
+    }
+
+    // Determines if a provided string (email) is a valid email
+    public static boolean isValidEmail( String email ) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
     }
 
 }
