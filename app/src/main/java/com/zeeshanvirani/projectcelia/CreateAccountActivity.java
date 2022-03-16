@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +50,17 @@ public class CreateAccountActivity extends AppCompatActivity {
                     || confirmpassword_textbox.getText() == null ) { // Text boxes are empty
 
                 // Display error message and have user retry
+                Toast.makeText(getApplicationContext(), "Fields cannot be null.",
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if ( name_textbox.getText().toString().isEmpty()
+                    || email_textbox.getText().toString().isEmpty()
+                    || password_textbox.getText().toString().isEmpty()
+                    || confirmpassword_textbox.getText().toString().isEmpty() ) { // Text boxes are empty
+
+                // Display error message and have user retry
                 Toast.makeText(getApplicationContext(), "Fields cannot be empty.",
                         Toast.LENGTH_LONG).show();
                 return;
@@ -71,16 +83,14 @@ public class CreateAccountActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) { // Account creation success
 
-                        String name = name_textbox.getText().toString();
                         Map<String, Object> data = new HashMap<>();
-                        data.put("firstName", name.split(" ")[0]);
-                        data.put("lastName", name.split(" ")[1]);
+                        data.put("name", name_textbox.getText().toString());
                         data.put("notifyBrewingStatus", true );
                         data.put("notifyMaintenanceReminders", true );
 
                         FirebaseFirestore.getInstance().collection("users")
                                 .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                .set(data);
+                                .set(data, SetOptions.merge());
 
                         DataHandler.updateSharedPreferences( getApplicationContext() );
 

@@ -38,7 +38,16 @@ public class LoginActivity extends AppCompatActivity {
             if ( email_textbox.getText() == null
                     || password_textbox.getText() == null ) { // Text boxes are empty
 
-                // Display error message and have user retry login
+                // Display error message and have user retry
+                Toast.makeText(getApplicationContext(), "Email and Password fields cannot be null.",
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if ( email_textbox.getText().toString().isEmpty()
+                    || password_textbox.getText().toString().isEmpty() ) { // Text boxes are empty
+
+                // Display error message and have user retry
                 Toast.makeText(getApplicationContext(), "Email and Password fields cannot be empty.",
                         Toast.LENGTH_LONG).show();
                 return;

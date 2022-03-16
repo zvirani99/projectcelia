@@ -24,7 +24,7 @@ public class DataHandler {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                String name = (String) documentSnapshot.get("firstName") + " " + documentSnapshot.get("lastName");
+                String name = (String) documentSnapshot.get("name");
                 boolean notifyBrewingStatus = (boolean) documentSnapshot.get("notifyBrewingStatus");
                 boolean notifyMaintenanceReminders = (boolean) documentSnapshot.get("notifyMaintenanceReminders");
                 editor.putString("account_name", name);

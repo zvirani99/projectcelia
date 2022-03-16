@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,6 +49,7 @@ public class SettingsFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        Map<String, Object> data = new HashMap<>();
         switch (s) {
             case "notifications_brewing_status":
                 if ( sp.getBoolean( "notifications_brewing_status", true) ) {
@@ -57,6 +59,11 @@ public class SettingsFragment extends Fragment implements SharedPreferences.OnSh
                     Snackbar.make(view.findViewById(R.id.settings_heading), "You will no longer be notified about the status of your brews.", Snackbar.LENGTH_SHORT)
                             .show();
                 }
+
+                data.put("notifyBrewingStatus", sp.getBoolean( "notifications_brewing_status", true) );
+                FirebaseFirestore.getInstance().collection("users")
+                        .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .set(data, SetOptions.merge());
                 break;
 
             case "notifications_maintenance_reminders":
@@ -67,17 +74,19 @@ public class SettingsFragment extends Fragment implements SharedPreferences.OnSh
                     Snackbar.make(view.findViewById(R.id.settings_heading), "You will no longer be notified about maintenance items.", Snackbar.LENGTH_SHORT)
                             .show();
                 }
+
+                data.put("notifyMaintenanceReminders", sp.getBoolean( "notifications_maintenance_reminders", true) );
+                FirebaseFirestore.getInstance().collection("users")
+                        .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .set(data, SetOptions.merge());
                 break;
 
             case "account_name":
-                String name = sp.getString( "account_name", "" );
-                Map<String, Object> data = new HashMap<>();
-                data.put("firstName", name.split(" ")[0]);
-                data.put("lastName", name.split(" ")[1]);
+                data.put("name", sp.getString( "account_name", "" ));
 
                 FirebaseFirestore.getInstance().collection("users")
                         .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .set(data);
+                        .set(data, SetOptions.merge());
                 break;
 
             case "account_email":
