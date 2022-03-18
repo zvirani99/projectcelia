@@ -1,5 +1,6 @@
 package com.zeeshanvirani.projectcelia;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -139,6 +140,10 @@ public class BrewFragment extends Fragment {
                 cupsize_med_btn.setSelected(false);
                 cupsize_large_btn.setSelected(true);
             }
+        });
+
+        start_brew_btn.setOnClickListener(view1 -> {
+            startActivity( new Intent(getActivity().getApplicationContext(), BrewingProcess.class));
         });
 
         return view;

@@ -4,12 +4,15 @@
 
     <application
         android:allowBackup="true"
-        android:screenOrientation="portrait"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectCelia">
+        <activity
+            android:name=".BrewingProcess"
+            android:exported="false" />
         <activity
             android:name=".CreateAccountActivity"
             android:exported="false" />
