@@ -1,24 +1,16 @@
 package com.zeeshanvirani.projectcelia;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 
-import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.google.android.material.button.MaterialButton;
 
 public class HistoryFragment extends Fragment {
 
@@ -41,10 +33,10 @@ public class HistoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_history, container, false);
 
         // Set context to application context for use elsewhere
-        context = getActivity().getApplicationContext();
+        if ( getActivity() != null ) context = getActivity().getApplicationContext();
 
         // Initialize views within ViewGroup
-        historyLayout = (RecyclerView) view.findViewById(R.id.brew_history_list);
+        historyLayout = view.findViewById(R.id.brew_history_list);
 
         // Get data from database and sort into its proper arrays
         brewHistory_ids = TempDatabaseClass.brewHistory_ids;

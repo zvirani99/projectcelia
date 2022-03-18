@@ -23,16 +23,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        email_textbox = (TextInputEditText) findViewById(R.id.email_textbox);
-        password_textbox = (TextInputEditText) findViewById(R.id.password_textbox);
+        email_textbox = findViewById(R.id.email_textbox);
+        password_textbox = findViewById(R.id.password_textbox);
 
-        ImageButton back_btn = (ImageButton) findViewById(R.id.back_button);
+        ImageButton back_btn = findViewById(R.id.back_button);
         back_btn.setOnClickListener(view -> {
             // Return to LaunchActivity
             onBackPressed();
         });
 
-        Button login_btn = (Button) findViewById(R.id.login_button);
+        Button login_btn = findViewById(R.id.login_button);
         login_btn.setOnClickListener(view -> {
             // Verify if fields are properly filled in
             if ( email_textbox.getText() == null

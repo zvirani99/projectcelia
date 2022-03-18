@@ -29,18 +29,18 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
-        name_textbox = (TextInputEditText) findViewById(R.id.name_textbox);
-        email_textbox = (TextInputEditText) findViewById(R.id.email_textbox);
-        password_textbox = (TextInputEditText) findViewById(R.id.password_textbox);
-        confirmpassword_textbox = (TextInputEditText) findViewById(R.id.confirmpassword_textbox);
+        name_textbox = findViewById(R.id.name_textbox);
+        email_textbox = findViewById(R.id.email_textbox);
+        password_textbox = findViewById(R.id.password_textbox);
+        confirmpassword_textbox = findViewById(R.id.confirmpassword_textbox);
 
-        ImageButton back_btn = (ImageButton) findViewById(R.id.back_button);
+        ImageButton back_btn = findViewById(R.id.back_button);
         back_btn.setOnClickListener(view -> {
             // Return to launch activity
             onBackPressed();
         });
 
-        Button createaccount_btn = (Button) findViewById(R.id.createaccount_button);
+        Button createaccount_btn = findViewById(R.id.createaccount_button);
         createaccount_btn.setOnClickListener(view -> {
 
             // Verify if fields are properly filled in
@@ -81,6 +81,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email_textbox.getText().toString(), password_textbox.getText().toString())
                 .addOnCompleteListener(this, task -> {
+                    assert FirebaseAuth.getInstance().getCurrentUser() != null;
                     if (task.isSuccessful()) { // Account creation success
 
                         Map<String, Object> data = new HashMap<>();

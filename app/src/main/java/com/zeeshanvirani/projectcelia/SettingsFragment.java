@@ -3,12 +3,9 @@ package com.zeeshanvirani.projectcelia;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +30,7 @@ public class SettingsFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        assert getActivity() != null;
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_settings, container, false);
         getChildFragmentManager().beginTransaction()
@@ -49,6 +47,8 @@ public class SettingsFragment extends Fragment implements SharedPreferences.OnSh
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        assert getActivity() != null;
+        assert FirebaseAuth.getInstance().getCurrentUser() != null;
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         Map<String, Object> data = new HashMap<>();
         switch (s) {

@@ -14,12 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
 public class BrewFragment extends Fragment {
 
     // Define view variables
@@ -57,18 +51,18 @@ public class BrewFragment extends Fragment {
         }
 
         // Initialize views within ViewGroup
-        roast_light_btn = (Button) view.findViewById(R.id.button_roast_light);
-        roast_medium_btn = (Button) view.findViewById(R.id.button_roast_medium);
-        roast_mediumdark_btn = (Button) view.findViewById(R.id.button_roast_mediumdark);
-        roast_dark_btn = (Button) view.findViewById(R.id.button_roast_dark);
+        roast_light_btn = view.findViewById(R.id.button_roast_light);
+        roast_medium_btn = view.findViewById(R.id.button_roast_medium);
+        roast_mediumdark_btn = view.findViewById(R.id.button_roast_mediumdark);
+        roast_dark_btn = view.findViewById(R.id.button_roast_dark);
 
-        cupsize_small_btn = (Button) view.findViewById(R.id.button_cupsize_8oz);
-        cupsize_med_btn = (Button) view.findViewById(R.id.button_cupsize_16oz);
-        cupsize_large_btn = (Button) view.findViewById(R.id.button_cupsize_20oz);
+        cupsize_small_btn = view.findViewById(R.id.button_cupsize_8oz);
+        cupsize_med_btn = view.findViewById(R.id.button_cupsize_16oz);
+        cupsize_large_btn = view.findViewById(R.id.button_cupsize_20oz);
 
-        start_brew_btn = (Button) view.findViewById(R.id.button_startbrew);
+        start_brew_btn = view.findViewById(R.id.button_startbrew);
 
-        heading_name = (TextView) view.findViewById(R.id.firstname);
+        heading_name = view.findViewById(R.id.firstname);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         String fullName = sharedPreferences.getString("account_name", "");
         heading_name.setText( fullName.split(" ")[0] );
@@ -150,9 +144,9 @@ public class BrewFragment extends Fragment {
             }
         });
 
-        start_brew_btn.setOnClickListener(view1 -> {
-            startActivity( new Intent(getActivity().getApplicationContext(), BrewingProcess.class));
-        });
+        start_brew_btn.setOnClickListener(view1 ->
+                startActivity( new Intent(getActivity().getApplicationContext(), BrewingProcess.class))
+        );
 
         return view;
     }
