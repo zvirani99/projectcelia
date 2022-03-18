@@ -66,6 +66,7 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
             public boolean onPreferenceClick(Preference preference) {
                 FirebaseAuth.getInstance().signOut();
                 startActivity( new Intent( getActivity().getApplicationContext(), LaunchActivity.class ) );
+                getActivity().finishAffinity();
                 return true;
             }
         });

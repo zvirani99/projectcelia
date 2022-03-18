@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
@@ -47,6 +48,13 @@ public class BrewFragment extends Fragment {
 
         // Inflate layout and set variable
         View view = inflater.inflate(R.layout.fragment_brew, container, false);
+
+        if ( PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext())
+                .getBoolean( "notifications_darklight_mode", true) ) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
 
         // Initialize views within ViewGroup
         roast_light_btn = (Button) view.findViewById(R.id.button_roast_light);

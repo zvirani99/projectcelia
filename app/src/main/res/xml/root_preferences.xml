@@ -5,6 +5,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:iconSpaceReserved="false" >
 
+    <!--        Dark/Light Mode-->
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="notifications_darklight_mode"
+        android:title="Dark Mode"
+        app:iconSpaceReserved="false"/>
+
     <PreferenceCategory android:title="Account" app:iconSpaceReserved="false">
 
         <!--        Change Name-->

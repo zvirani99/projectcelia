@@ -37,7 +37,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         ImageButton back_btn = (ImageButton) findViewById(R.id.back_button);
         back_btn.setOnClickListener(view -> {
             // Return to launch activity
-            startActivity( new Intent(this, LaunchActivity.class) );
+            onBackPressed();
         });
 
         Button createaccount_btn = (Button) findViewById(R.id.createaccount_button);
@@ -95,6 +95,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                         DataHandler.updateSharedPreferences( getApplicationContext() );
 
                         startActivity( new Intent(getApplicationContext(), MainActivity.class) );
+                        finishAffinity();
                     } else { // Account creation failed
                         Toast.makeText(getApplicationContext(), "Account creation failed. Try again later.",
                                 Toast.LENGTH_SHORT).show();

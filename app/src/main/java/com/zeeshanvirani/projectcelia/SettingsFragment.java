@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
@@ -34,7 +35,7 @@ public class SettingsFragment extends Fragment implements SharedPreferences.OnSh
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_settings, container, false);
-        getParentFragmentManager().beginTransaction()
+        getChildFragmentManager().beginTransaction()
                 .replace(R.id.settings_fragment_container, new PreferenceFragment())
                 .commit();
 
@@ -79,6 +80,14 @@ public class SettingsFragment extends Fragment implements SharedPreferences.OnSh
                 FirebaseFirestore.getInstance().collection("users")
                         .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
                         .set(data, SetOptions.merge());
+                break;
+
+            case "notifications_darklight_mode":
+                if ( sp.getBoolean( "notifications_darklight_mode", true) ) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
                 break;
 
             case "account_name":

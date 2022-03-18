@@ -21,6 +21,7 @@ public class LaunchActivity extends AppCompatActivity {
         if ( FirebaseAuth.getInstance().getCurrentUser() != null ) {
             DataHandler.updateSharedPreferences( getApplicationContext() );
             startActivity( new Intent(this, MainActivity.class) );
+            finish();
         }
 
         Button createaccount_btn = findViewById(R.id.button_createaccount);

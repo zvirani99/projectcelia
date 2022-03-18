@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         ImageButton back_btn = (ImageButton) findViewById(R.id.back_button);
         back_btn.setOnClickListener(view -> {
             // Return to LaunchActivity
-            startActivity( new Intent(this, LaunchActivity.class) );
+            onBackPressed();
         });
 
         Button login_btn = (Button) findViewById(R.id.login_button);
@@ -67,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                         DataHandler.updateSharedPreferences( getApplicationContext() );
                         // Switch to MainActivity
                         startActivity( new Intent(getApplicationContext(), MainActivity.class) );
+                        finishAffinity();
                     } else { // Sign in failed
                         Toast.makeText(getApplicationContext(), "Invalid email or password. Please try again.",
                                 Toast.LENGTH_LONG).show();
