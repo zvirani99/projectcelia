@@ -8,27 +8,21 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LaunchActivity extends AppCompatActivity {
 
-    // Sets up Activity
-    // Checks if user is already logged in and redirects to MainActivity
-    // Otherwise displays current page.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
 
-        System.out.println("LAUNCHACTIVITY : ON CREATE CALLED");
-
+        // Check if user is already logged in
         if ( FirebaseAuth.getInstance().getCurrentUser() != null ) {
             DataHandler.updateSharedPreferences( getApplicationContext() );
-            System.out.println("SWITCHING TO MAIN ACTIVITY");
-            Intent myIntent = new Intent(this, MainActivity.class);
-            startActivity(myIntent);
+            startActivity(new Intent(this, MainActivity.class));
             finish();
         }
 
@@ -46,13 +40,10 @@ public class LaunchActivity extends AppCompatActivity {
 
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        // Check for connected network
         if ( networkInfo == null || !networkInfo.isConnectedOrConnecting() ) {
-            // No Internet Connection Available
-            // Display some error message here
-//            Snackbar.make( findViewById(R.id.createaccount_button),
-//                    "No Internet Connection Available",
-//                    Snackbar.LENGTH_SHORT )
-//                    .show();
+            Toast.makeText(getApplicationContext(), "No Internet Connection available. Connect to the internet and restart the application.",
+                    Toast.LENGTH_SHORT).show();
             createaccount_btn.setEnabled( false );
             login_btn.setEnabled( false );
         } else {
