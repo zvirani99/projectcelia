@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
@@ -24,7 +23,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Calendar;
 
 
 public class BrewFragment extends Fragment {
@@ -45,6 +43,9 @@ public class BrewFragment extends Fragment {
 
     private FirebaseFirestore fsInstance = FirebaseFirestore.getInstance();
 
+    private final Button[] roastTypeButtons = { roast_light_btn, roast_medium_btn, roast_mediumdark_btn, roast_dark_btn };
+    private final Button[] cupSizeButtons = { cupsize_small_btn, cupsize_med_btn, cupsize_large_btn };
+
     // Required empty public constructor
     public BrewFragment() {}
 
@@ -57,14 +58,6 @@ public class BrewFragment extends Fragment {
 
         // Inflate layout and set variable
         View view = inflater.inflate(R.layout.fragment_brew, container, false);
-
-//        assert getActivity() != null;
-//        if ( PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext())
-//                .getBoolean( "notifications_darklight_mode", true) ) {
-//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//        } else {
-//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//        }
 
         // Initialize views within ViewGroup
         roast_light_btn = view.findViewById(R.id.button_roast_light);
@@ -86,19 +79,14 @@ public class BrewFragment extends Fragment {
         // On Click Listener for Roast Type Buttons and Cup Size Buttons
         // Checks if button already selected and unselects it
         // Otherwise selects it and unselects other options
-        roast_light_btn.setOnClickListener(view1 -> AdjustRoastButtons( 0 ));
+        roast_light_btn.setOnClickListener(view1 -> adjustRoastButtons( 0 ));
+        roast_medium_btn.setOnClickListener(view1 -> adjustRoastButtons( 1 ));
+        roast_mediumdark_btn.setOnClickListener(view1 -> adjustRoastButtons( 2 ));
+        roast_dark_btn.setOnClickListener(view1 -> adjustRoastButtons( 3 ));
 
-        roast_medium_btn.setOnClickListener(view1 -> AdjustRoastButtons( 1 ));
-
-        roast_mediumdark_btn.setOnClickListener(view1 -> AdjustRoastButtons( 2 ));
-
-        roast_dark_btn.setOnClickListener(view1 -> AdjustRoastButtons( 3 ));
-
-        cupsize_small_btn.setOnClickListener(view1 -> AdjustSizeButtons(0));
-
-        cupsize_med_btn.setOnClickListener(view1 -> AdjustSizeButtons(1));
-
-        cupsize_large_btn.setOnClickListener(view1 -> AdjustSizeButtons(2));
+        cupsize_small_btn.setOnClickListener(view1 -> adjustSizeButtons(0));
+        cupsize_med_btn.setOnClickListener(view1 -> adjustSizeButtons(1));
+        cupsize_large_btn.setOnClickListener(view1 -> adjustSizeButtons(2));
 
         start_brew_btn.setOnClickListener(view1 -> {
             // Get Data from Database and pass onto new intent
@@ -142,28 +130,26 @@ public class BrewFragment extends Fragment {
     // 0 = light, 1 = medium, 2 = meddark, 3 = dark
     // Selects button if unselected and replaces text with full name and expands width
     // All other buttons are unselected, set to normal width, and short name
-    public void AdjustRoastButtons( int selButton ) {
-
-        Button[] brewButtons = { roast_light_btn, roast_medium_btn, roast_mediumdark_btn, roast_dark_btn };
+    public void adjustRoastButtons( int selButton ) {
         String[] unselBrewText = {"L", "M", "MD", "D"};
         String[] selBrewText = {"Light", "Medium", "MedDark", "Dark"};
 
-        for ( int i = 0; i < brewButtons.length; i++ ) {
+        for ( int i = 0; i < roastTypeButtons.length; i++ ) {
 
-            if ( i == selButton & !brewButtons[i].isSelected() ) {
-                brewButtons[i].setSelected( true );
+            if ( i == selButton & !roastTypeButtons[i].isSelected() ) {
+                roastTypeButtons[i].setSelected( true );
 
-                brewButtons[i].setText( selBrewText[i] );
+                roastTypeButtons[i].setText( selBrewText[i] );
                 LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(dpToPx(90), dpToPx(60) );
                 lparams.setMargins(dpToPx(10), dpToPx(10), dpToPx(10), dpToPx(10));
-                brewButtons[i].setLayoutParams( lparams );
+                roastTypeButtons[i].setLayoutParams( lparams );
             } else {
-                brewButtons[i].setSelected( false );
+                roastTypeButtons[i].setSelected( false );
 
-                brewButtons[i].setText( unselBrewText[i] );
+                roastTypeButtons[i].setText( unselBrewText[i] );
                 LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(dpToPx(50), dpToPx(60) );
                 lparams.setMargins(dpToPx(10), dpToPx(10), dpToPx(10), dpToPx(10));
-                brewButtons[i].setLayoutParams( lparams );
+                roastTypeButtons[i].setLayoutParams( lparams );
             }
 
         }
@@ -175,10 +161,9 @@ public class BrewFragment extends Fragment {
     // 0 = small, 1 = medium, 2 = large
     // Selects button if unselected
     // All other buttons are unselected
-    public void AdjustSizeButtons( int selButton ) {
-        Button[] sizeButtons = { cupsize_small_btn, cupsize_med_btn, cupsize_large_btn };
-        for ( int i = 0; i < sizeButtons.length; i++ ) {
-            sizeButtons[i].setSelected(i == selButton & !sizeButtons[i].isSelected());
+    public void adjustSizeButtons( int selButton ) {
+        for ( int i = 0; i < cupSizeButtons.length; i++ ) {
+            cupSizeButtons[i].setSelected(i == selButton & !cupSizeButtons[i].isSelected());
         }
     }
 
@@ -192,17 +177,16 @@ public class BrewFragment extends Fragment {
     }
 
     public String getSelectedRoast() {
-        if ( roast_light_btn.isSelected() ) return roast_light_btn.getText().toString();
-        else if ( roast_medium_btn.isSelected() ) return roast_medium_btn.getText().toString();
-        else if ( roast_mediumdark_btn.isSelected() ) return roast_mediumdark_btn.getText().toString();
-        else if ( roast_dark_btn.isSelected() ) return roast_dark_btn.getText().toString();
-        else return "";
+        for ( Button x : roastTypeButtons ) {
+            if ( x.isSelected() ) return x.getText().toString();
+        }
+        return "";
     }
 
     public String getSelectedSize() {
-        if ( cupsize_small_btn.isSelected() ) return cupsize_small_btn.getText().toString();
-        else if ( cupsize_med_btn.isSelected() ) return cupsize_med_btn.getText().toString();
-        else if ( cupsize_large_btn.isSelected() ) return cupsize_large_btn.getText().toString();
-        else return "";
+        for ( Button x : cupSizeButtons ) {
+            if ( x.isSelected() ) return x.getText().toString();
+        }
+        return "";
     }
 }
