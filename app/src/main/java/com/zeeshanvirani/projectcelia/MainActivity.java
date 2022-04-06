@@ -1,22 +1,12 @@
 package com.zeeshanvirani.projectcelia;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.PreferenceManager;
 
-import android.Manifest;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.io.IOException;
-import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +18,13 @@ public class MainActivity extends AppCompatActivity {
         HistoryFragment historyFragment = new HistoryFragment();
         BrewFragment brewFragment = new BrewFragment();
         SettingsFragment settingsFragment = new SettingsFragment();
+
+        if ( PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                .getBoolean( "notifications_darklight_mode", true) ) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener(item -> {
