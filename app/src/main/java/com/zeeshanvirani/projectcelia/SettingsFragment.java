@@ -83,6 +83,7 @@ public class SettingsFragment extends Fragment implements SharedPreferences.OnSh
                 break;
 
             case "notifications_darklight_mode":
+                // CAUSES CRASH IF SWITCHING TO DARK MODE AND THEN BACK
                 if ( sp.getBoolean( "notifications_darklight_mode", true) ) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 } else {

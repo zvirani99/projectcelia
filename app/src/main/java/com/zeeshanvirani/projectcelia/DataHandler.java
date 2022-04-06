@@ -12,6 +12,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 // Handles all modifications of stored local data
 public class DataHandler {
 
+    public static boolean DEVICE_CONNECTED = false;
+    public static BluetoothSocketHandler btSocketHandler = null;
+    // UUID
+    //
+    public static String DB_USER_ID = "user_id";
+    public static String DB_DATE = "date";
+    public static String DB_TIME = "time";
+    public static String DB_ROAST_TYPE = "roast_type";
+    public static String DB_CUP_SIZE = "cup_size";
+    public static String DB_RATING = "rating";
+    public static String DB_TEMPERATURE = "temperature";
+    public static String DB_TARGET_SATURATION = "target_saturation";
+
     // Update all preferences
     public static void updateSharedPreferences( Context context ) {
         assert FirebaseAuth.getInstance().getCurrentUser() != null;

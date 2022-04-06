@@ -88,6 +88,8 @@ public class CreateAccountActivity extends AppCompatActivity {
                         data.put("name", name_textbox.getText().toString());
                         data.put("notifyBrewingStatus", true );
                         data.put("notifyMaintenanceReminders", true );
+                        data.put("next_target_temperature", "200");
+                        data.put("next_target_saturation", "50");
 
                         FirebaseFirestore.getInstance().collection("users")
                                 .document(FirebaseAuth.getInstance().getCurrentUser().getUid())

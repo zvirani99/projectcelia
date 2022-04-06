@@ -13,7 +13,10 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.22314814814814815" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.11930091185410334" />
         <entry key="app/src/main/res/layout/brew_history_card.xml" value="0.13148148148148148" />
-        <entry key="app/src/main/res/layout/fragment_brew.xml" value="0.2074074074074074" />
+        <entry key="app/src/main/res/layout/dialog_change_password.xml" value="0.26639344262295084" />
+        <entry key="app/src/main/res/layout/dialog_device_information.xml" value="0.2453125" />
+        <entry key="app/src/main/res/layout/fragment_brew.xml" value="0.24074074074074073" />
+        <entry key="app/src/main/res/layout/fragment_connect_device.xml" value="0.24074074074074073" />
         <entry key="app/src/main/res/layout/fragment_history.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/layout/fragment_launch.xml" value="0.16530797101449277" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.11930091185410334" />
