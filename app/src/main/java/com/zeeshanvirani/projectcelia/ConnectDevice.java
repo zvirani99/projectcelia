@@ -32,13 +32,6 @@ import java.util.UUID;
 
 public class ConnectDevice extends Fragment {
 
-    private final String MY_MACADDR = "B8:27:EB:B6:98:20";
-    private final UUID MY_UUID = UUID.fromString("b3f75a8f-fa4b-4dbc-8e79-51a486a30fa9");
-
-    private BluetoothAdapter btAdapter;
-    private BluetoothSocket btSocket;
-    private BluetoothDevice btDevice;
-
     public ConnectDevice() {}
 
     @Override
@@ -47,34 +40,11 @@ public class ConnectDevice extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_connect_device, container, false);
 
-        TextView connection_status_text = view.findViewById(R.id.deviceconnecting_status);
-
-//        int CONSTANT = 0;
-//        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, CONSTANT);
-//
-//        if ( !DataHandler.DEVICE_CONNECTED ) startPairing();
-//        else sendDataToDevice();
-
-        connection_status_text.setText( DataHandler.btSocketHandler != null ?
-                "Socket Connected" : "Not Connected" );
-
-        Button sendmsg = view.findViewById(R.id.deviceconnecting_sendmsg);
-        sendmsg.setOnClickListener( view1 -> {
-            sendDataToDevice();
-        });
+        // Find device by name
+        // Store mac address in preferences/database
+        // Set device connected to true
 
         return view;
-    }
-
-    @Override
-    public void onDestroy() {
-        //requireActivity().unregisterReceiver(receiver);
-        //DataHandler.btSocketHandler.closeSocket();
-        super.onDestroy();
-    }
-
-    private void sendDataToDevice() {
-        DataHandler.btSocketHandler.sendMessage("on");
     }
 
 }
