@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/onPrimary"
-        android:text="MAC Address: xx:xx:xx:xx" />
+        android:text="MAC Address: B8:27:EB:B6:98:20" />
 
 
 </LinearLayout>
