@@ -3,6 +3,7 @@ package com.zeeshanvirani.projectcelia;
 import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class ChangePasswordDialogFragment extends DialogFragment {
 
+    private static final String TAG = "ProjectCelia:ChangePasswordDialogFragment";
     View view;
 
     // Necessary constructor
@@ -23,15 +25,12 @@ public class ChangePasswordDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        assert getActivity() != null;
-        // Use the Builder class for convenient dialog construction
         view = getLayoutInflater().inflate( R.layout.dialog_change_password, null );
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity(), R.style.Theme_ProjectCelia_MaterialAlertDialog);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireActivity(), R.style.Theme_ProjectCelia_MaterialAlertDialog);
         builder.setMessage("Enter your new password.")
                 .setPositiveButton("Submit", (dialog, id) -> {} )
                 .setNegativeButton("Cancel", (dialog, id) -> dialog.dismiss() )
                 .setView( view );
-        // Create the AlertDialog object and return it
         return builder.create();
     }
 
@@ -49,14 +48,16 @@ public class ChangePasswordDialogFragment extends DialogFragment {
                     FirebaseAuth.getInstance().getCurrentUser().updatePassword( password.getText().toString() )
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
-                                    System.out.println("Password updated");
+                                    Log.d(TAG, "User password has been updated.");
                                 } else {
-                                    System.out.println("Error password not updated");
+                                    Log.d(TAG, "Error occurred. Password not updated.");
                                 }
                             });
                     dialog.dismiss();
                 } else {
-                    System.out.println("Password does not match.");
+                    Log.d(TAG, "Entered passwords do not match.");
+                    password.setError( "Password does not match" );
+                    confirmpassword.setError( "Password does not match" );
                 }
             });
         }
