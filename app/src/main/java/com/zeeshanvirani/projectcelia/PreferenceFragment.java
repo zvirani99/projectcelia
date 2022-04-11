@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class PreferenceFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private static final String TAG = "PreferenceFragment";
+    private static final String TAG = "ProjectCelia:PreferenceFragment";
 
     @Override
     public void onResume() {
@@ -90,7 +90,6 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
         // Device information brings up alertdialog with device information
         Preference deviceinformation_preference = findPreference("device_information");
         if (deviceinformation_preference != null) {
-            deviceinformation_preference.setVisible( DataHandler.DEVICE_CONNECTED );
             deviceinformation_preference.setOnPreferenceClickListener(preference -> {
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext(), R.style.Theme_ProjectCelia_MaterialAlertDialog);
                 builder.setMessage("Device Information");
@@ -102,18 +101,18 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
             });
         }
 
-        Preference deviceconnect_preference = findPreference("device_connect");
-        if (deviceconnect_preference != null) {
-            deviceconnect_preference.setTitle( DataHandler.DEVICE_CONNECTED ? "Disconnect Device" : "Connect Device" );
-            deviceconnect_preference.setOnPreferenceClickListener(preference -> {
-                DataHandler.DEVICE_CONNECTED = !DataHandler.DEVICE_CONNECTED;
-                deviceconnect_preference.setTitle( DataHandler.DEVICE_CONNECTED ? "Disconnect Device" : "Connect Device" );
-                if (deviceinformation_preference != null) {
-                    deviceinformation_preference.setVisible( DataHandler.DEVICE_CONNECTED );
-                }
-                return true;
-            });
-        }
+//        Preference deviceconnect_preference = findPreference("device_connect");
+//        if (deviceconnect_preference != null) {
+//            deviceconnect_preference.setTitle( DataHandler.DEVICE_CONNECTED ? "Disconnect Device" : "Connect Device" );
+//            deviceconnect_preference.setOnPreferenceClickListener(preference -> {
+//                DataHandler.DEVICE_CONNECTED = !DataHandler.DEVICE_CONNECTED;
+//                deviceconnect_preference.setTitle( DataHandler.DEVICE_CONNECTED ? "Disconnect Device" : "Connect Device" );
+//                if (deviceinformation_preference != null) {
+//                    deviceinformation_preference.setVisible( DataHandler.DEVICE_CONNECTED );
+//                }
+//                return true;
+//            });
+//        }
 
         Preference visitwebsite_preference = findPreference("visitwebsite");
         if (visitwebsite_preference != null) {

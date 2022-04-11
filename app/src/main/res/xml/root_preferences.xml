@@ -57,11 +57,11 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="Device" app:iconSpaceReserved="false">
 
-        <Preference
-            android:title="Connect Device"
-            android:key="device_connect"
-            app:iconSpaceReserved="false"
-            />
+<!--        <Preference-->
+<!--            android:title="Connect Device"-->
+<!--            android:key="device_connect"-->
+<!--            app:iconSpaceReserved="false"-->
+<!--            />-->
 
         <Preference
             android:title="Device Information"
