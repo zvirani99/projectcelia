@@ -28,7 +28,7 @@
         android:layout_centerHorizontal="true"
         android:textColor="@color/onPrimary"
         android:textSize="18sp"
-        android:text="Heating Water" />
+        android:text="Connecting to Device" />
 
 <!--    Return to Home-->
     <com.google.android.material.button.MaterialButton
