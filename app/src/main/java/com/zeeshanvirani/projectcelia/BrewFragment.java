@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import java.util.Map;
 
 public class BrewFragment extends Fragment {
 
+    private static final String TAG = "ProjectCelia:BrewFragment";
     // Define view variables
     private Button roast_light_btn;
     private Button roast_medium_btn;
@@ -43,8 +45,8 @@ public class BrewFragment extends Fragment {
 
     private FirebaseFirestore fsInstance = FirebaseFirestore.getInstance();
 
-    private final Button[] roastTypeButtons = { roast_light_btn, roast_medium_btn, roast_mediumdark_btn, roast_dark_btn };
-    private final Button[] cupSizeButtons = { cupsize_small_btn, cupsize_med_btn, cupsize_large_btn };
+    private Button[] roastTypeButtons;
+    private Button[] cupSizeButtons;
 
     // Required empty public constructor
     public BrewFragment() {}
@@ -69,7 +71,11 @@ public class BrewFragment extends Fragment {
         cupsize_med_btn = view.findViewById(R.id.button_cupsize_16oz);
         cupsize_large_btn = view.findViewById(R.id.button_cupsize_20oz);
 
+        roastTypeButtons = new Button[]{roast_light_btn, roast_medium_btn, roast_mediumdark_btn, roast_dark_btn};
+        cupSizeButtons = new Button[]{cupsize_small_btn, cupsize_med_btn, cupsize_large_btn};
+
         start_brew_btn = view.findViewById(R.id.button_startbrew);
+        //start_brew_btn.setEnabled(DataHandler.DEVICE_CONNECTED);
 
         heading_name = view.findViewById(R.id.firstname);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
@@ -89,6 +95,12 @@ public class BrewFragment extends Fragment {
         cupsize_large_btn.setOnClickListener(view1 -> adjustSizeButtons(2));
 
         start_brew_btn.setOnClickListener(view1 -> {
+
+            if ( getSelectedRoast().equals("") || getSelectedSize().equals("") ) {
+                Log.d(TAG, "Roast or Size not selected.");
+                return;
+            }
+
             // Get Data from Database and pass onto new intent
             Map<String, Object> brew = new HashMap<>();
 
