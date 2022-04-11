@@ -1,6 +1,5 @@
 package com.zeeshanvirani.projectcelia;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -9,13 +9,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.UUID;
+
 // Handles all modifications of stored local data
 public class DataHandler {
 
     public static boolean DEVICE_CONNECTED = false;
     public static BluetoothSocketHandler btSocketHandler = null;
-    // UUID
-    //
+    public static String DEVICE_MACADDR = "B8:27:EB:B6:98:20";
+    public static UUID MY_UUID = UUID.fromString("b3f75a8f-fa4b-4dbc-8e79-51a486a30fa9");
+
     public static String DB_USER_ID = "user_id";
     public static String DB_DATE = "date";
     public static String DB_TIME = "time";
