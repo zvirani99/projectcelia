@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,12 +23,10 @@ import java.util.UUID;
 
 public class BrewingProcess extends AppCompatActivity {
 
-    public final String MY_MACADDR = "B8:27:EB:B6:98:20";
-    public final UUID MY_UUID = UUID.fromString("b3f75a8f-fa4b-4dbc-8e79-51a486a30fa9");
+    public static final String TAG = "ProjectCelia:BrewingProcess";
 
     private BluetoothAdapter btAdapter;
     private BluetoothSocket btSocket;
-    private BluetoothDevice btDevice;
 
     public MyBroadcastReceiver myReceiver;
 
@@ -95,9 +94,6 @@ public class BrewingProcess extends AppCompatActivity {
 
     }
 
-    public void beginBrewing() {
-    }
-
     public void statusUpdate( String newStatus ) {
         brewing_text.setText( newStatus );
         // Wait for confirmation
@@ -127,7 +123,7 @@ public class BrewingProcess extends AppCompatActivity {
 
         try {
             if (!btAdapter.isEnabled()) {
-                System.out.println("Enabled BT");
+                Log.d(TAG, "Enabled Bluetooth Adapter");
                 Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivity(turnOn);
             }
@@ -143,11 +139,11 @@ public class BrewingProcess extends AppCompatActivity {
             // Get a BluetoothSocket to connect with the given BluetoothDevice.
             // MY_UUID is the app's UUID string, also used in the server code.
             btAdapter.cancelDiscovery();
-            System.out.println("DEVICE FOUND! ATTEMPTING TO CONNECT.");
-            btSocket = device.createInsecureRfcommSocketToServiceRecord(MY_UUID);
+            Log.d(TAG, "Found a device. Attempting to connect.");
+            btSocket = device.createInsecureRfcommSocketToServiceRecord( DataHandler.MY_UUID );
             DataHandler.btSocketHandler = new BluetoothSocketHandler( this, btSocket );
         } catch (SecurityException | IOException e) {
-            System.out.println("Error connecting");
+            Log.d(TAG, "Error connecting to the device.");
         }
     }
 }
@@ -157,13 +153,15 @@ class MyBroadcastReceiver extends BroadcastReceiver {
     public boolean isRegistered;
     private BrewingProcess activity;
 
+    private boolean deviceFound = false;
+
     public MyBroadcastReceiver(BrewingProcess activity) {
         this.activity = activity;
     }
 
     public Intent register(Context context, IntentFilter filter) {
         try {
-            System.out.println("RECEIVER REGISTERED");
+            Log.d(BrewingProcess.TAG, "Registered Receiver Adapter");
             return !isRegistered
                     ? context.registerReceiver(this, filter)
                     : null;
@@ -172,7 +170,7 @@ class MyBroadcastReceiver extends BroadcastReceiver {
         }
     }
     public boolean unregister(Context context) {
-        System.out.println("RECEIVER UNREGISTERED");
+        Log.d(BrewingProcess.TAG, "Unregistered Receiver Adapter");
         return isRegistered
                 && unregisterInternal(context);
     }
@@ -187,14 +185,19 @@ class MyBroadcastReceiver extends BroadcastReceiver {
         String action = intent.getAction();
         if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
             //discovery starts, we can show progress dialog or perform other tasks
-            System.out.println("DISCOVERY STARTED");
+            Log.d(BrewingProcess.TAG, "Started Bluetooth Discovery");
         } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
             //discovery finishes, dismiss progress dialog
-            System.out.println("DISCOVERY DONE");
+            if ( !deviceFound ) {
+                Log.d(BrewingProcess.TAG, "Device not found.");
+                activity.finish();
+            }
+            Log.d(BrewingProcess.TAG, "Discovery Completed");
         } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
             //bluetooth device found
             BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-            if ( device.getAddress().equals( activity.MY_MACADDR ) ) {
+            if ( device.getAddress().equals( DataHandler.DEVICE_MACADDR ) ) {
+                deviceFound = true;
                 activity.establishHandler(device);
             }
 
