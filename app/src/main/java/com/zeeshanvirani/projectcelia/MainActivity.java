@@ -12,43 +12,40 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        HistoryFragment historyFragment = new HistoryFragment();
-        BrewFragment brewFragment = new BrewFragment();
-        SettingsFragment settingsFragment = new SettingsFragment();
-
         if ( PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
                 .getBoolean( "notifications_darklight_mode", true) ) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            switch ( item.getItemId() ) {
-                case R.id.history:
-                    getSupportFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
-                            .replace( R.id.fragment_container, historyFragment ).commit();
-                    break;
-                case R.id.brew:
-                    getSupportFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
-                            .replace( R.id.fragment_container, brewFragment ).commit();
-                    break;
-                case R.id.settings:
-                    getSupportFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
-                            .replace( R.id.fragment_container, settingsFragment ).commit();
-                    break;
+            if ( item.getItemId() == R.id.history ) {
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
+                        .replace( R.id.fragment_container, new HistoryFragment() ).commit();
+            } else if ( item.getItemId() == R.id.brew ) {
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
+                        .replace( R.id.fragment_container, new BrewFragment() ).commit();
+            } else if ( item.getItemId() == R.id.settings ) {
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
+                        .replace( R.id.fragment_container, new SettingsFragment() ).commit();
             }
-
             return true;
         });
-        bottomNavigationView.setSelectedItemId( R.id.brew );
+
+        if ( savedInstanceState != null ) {
+            bottomNavigationView.setSelectedItemId( R.id.settings );
+        } else {
+            bottomNavigationView.setSelectedItemId( R.id.brew );
+        }
+
 
     }
 
