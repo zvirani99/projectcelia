@@ -1,6 +1,9 @@
 package com.zeeshanvirani.projectcelia;
 
 import android.bluetooth.BluetoothSocket;
+import android.util.Log;
+
+import com.google.android.material.internal.ToolbarUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,17 +11,23 @@ import java.io.OutputStream;
 
 public class BluetoothSocketHandler {
 
-    private final BrewingProcess bpInstance;
+    private static final String TAG = "ProjectCelia:BluetoothSocketHandler";
 
+    private final BrewingProcess bpInstance;
     private final BluetoothSocket btSocket;
+
+    private final String target_temp;
+    private final String target_saturation;
 
     private OutputStream outputStream;
     private InputStream inputStream;
 
-    public BluetoothSocketHandler( BrewingProcess instance, BluetoothSocket btSocket ) {
-        System.out.println("BLUETOOTHSOCKETHANDLER CREATED");
+    public BluetoothSocketHandler( BrewingProcess instance, BluetoothSocket btSocket,
+                                   String target_temp, String target_saturation ) {
         this.bpInstance = instance;
         this.btSocket = btSocket;
+        this.target_saturation = target_saturation;
+        this.target_temp = target_temp;
         try {
             outputStream = btSocket.getOutputStream();
             inputStream = btSocket.getInputStream();
@@ -30,11 +39,12 @@ public class BluetoothSocketHandler {
 
     private void createConnection() {
         try {
-            System.out.println("CONNECTING BT");
+            Log.d(TAG, "Connecting to Bluetooth Device.");
             btSocket.connect();
             new InputStreamThread().start();
             DataHandler.DEVICE_CONNECTED = true;
-            sendMessage("START_BREW");
+            Log.d(TAG, "Connected.");
+            sendMessage("START_BREW:" + target_temp + ":" + target_saturation);
         } catch (SecurityException | IOException e) {
             e.printStackTrace();
             closeSocket();
@@ -47,12 +57,17 @@ public class BluetoothSocketHandler {
 
     public boolean closeSocket() {
         try {
-            System.out.println("CLOSING SOCKET");
-            sendMessage("endConnection");
+            Thread.sleep(1000);
+            Log.d(TAG, "Closing Bluetooth Socket");
+            //sendMessage("endConnection");
+            inputStream.close();
+            outputStream.close();
+            inputStream = null;
+            outputStream = null;
             btSocket.close();
             DataHandler.DEVICE_CONNECTED = false;
             return true;
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return false;
         }
@@ -77,10 +92,11 @@ public class BluetoothSocketHandler {
                     // Read from the InputStream.
                     numBytes = inputStream.read(inBuffer);
                     String readMessage = new String(inBuffer, 0, numBytes);
-                    System.out.println( readMessage );
+                    Log.d(TAG, readMessage);
                     bpInstance.runOnUiThread(() -> bpInstance.statusUpdate(readMessage));
                 } catch (IOException e) {
-                    System.out.println("Input stream was disconnected" + e);
+                    Log.d(TAG, "Input Stream was Disconnect. " + e);
+                    //closeSocket();
                     break;
                 }
             }

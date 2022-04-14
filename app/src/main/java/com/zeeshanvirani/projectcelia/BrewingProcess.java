@@ -2,6 +2,7 @@ package com.zeeshanvirani.projectcelia;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
@@ -11,6 +12,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,9 +26,13 @@ import java.util.UUID;
 public class BrewingProcess extends AppCompatActivity {
 
     public static final String TAG = "ProjectCelia:BrewingProcess";
+    public static final String TAG_TEMPERATURE = "temperature";
+    public static final String TAG_TARGET_SATURATION = "saturation";
 
     private BluetoothAdapter btAdapter;
     private BluetoothSocket btSocket;
+
+    private String temperature, target_saturation;
 
     public MyBroadcastReceiver myReceiver;
 
@@ -37,6 +43,11 @@ public class BrewingProcess extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brewing_process);
+
+        Intent i = getIntent();
+
+        temperature = i.getStringExtra(TAG_TEMPERATURE);
+        target_saturation = i.getStringExtra(TAG_TARGET_SATURATION);
 
         brewing_text = findViewById(R.id.brewing_text);
         returnhome_btn = findViewById(R.id.brewing_gohome);
@@ -55,42 +66,11 @@ public class BrewingProcess extends AppCompatActivity {
             filter.addAction(BluetoothDevice.ACTION_FOUND);
             filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
             filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-            myReceiver.register(this, filter); // register
+            Intent tempI = myReceiver.register(this, filter); // register
             startPairing();
         }
 
         // Waits until device is connected, then beginBrewing is called from establishHandler()
-
-        // Demo
-//        new Thread(() -> {
-//            System.out.println("Thread Running");
-//            try {
-//                ChangeText( "Heating Water." );
-//                Thread.sleep(500);
-//                ChangeText( "Heating Water.." );
-//                Thread.sleep(500);
-//                ChangeText( "Heating Water..." );
-//                Thread.sleep(500);
-//                ChangeText( "Heating Water." );
-//                Thread.sleep(500);
-//                ChangeText( "Heating Water.." );
-//                Thread.sleep(500);
-//                ChangeText( "Pouring Water" );
-//                Thread.sleep(500);
-//                ChangeText( "Pouring Water." );
-//                Thread.sleep(500);
-//                ChangeText( "Pouring Water.." );
-//                Thread.sleep(500);
-//                ChangeText( "Pouring Water..." );
-//                Thread.sleep(500);
-//                ChangeText( "Pouring Water." );
-//                Thread.sleep(500);
-//                ChangeText( "Your Coffee is Ready!" );
-//                runOnUiThread(() -> returnhome_btn.setVisibility( View.VISIBLE ));
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }).start();
 
     }
 
@@ -109,7 +89,7 @@ public class BrewingProcess extends AppCompatActivity {
             return;
         } else if ( newStatus.equals("BREWING_COMPLETE") ) {
             // DISCONNECT BLUETOOTH DEVICE
-            myReceiver.unregister(this); // register
+            //myReceiver.unregister(this); // register
             DataHandler.btSocketHandler.closeSocket();
             DataHandler.btSocketHandler = null;
             returnhome_btn.setVisibility( View.VISIBLE );
@@ -128,7 +108,7 @@ public class BrewingProcess extends AppCompatActivity {
                 startActivity(turnOn);
             }
             if ( btAdapter.isDiscovering() ) btAdapter.cancelDiscovery();
-            System.out.println(btAdapter.startDiscovery());
+            Log.d(TAG, String.valueOf(btAdapter.startDiscovery()));
         } catch (SecurityException e ) {
             e.printStackTrace();
         }
@@ -141,7 +121,7 @@ public class BrewingProcess extends AppCompatActivity {
             btAdapter.cancelDiscovery();
             Log.d(TAG, "Found a device. Attempting to connect.");
             btSocket = device.createInsecureRfcommSocketToServiceRecord( DataHandler.MY_UUID );
-            DataHandler.btSocketHandler = new BluetoothSocketHandler( this, btSocket );
+            DataHandler.btSocketHandler = new BluetoothSocketHandler( this, btSocket, temperature, target_saturation );
         } catch (SecurityException | IOException e) {
             Log.d(TAG, "Error connecting to the device.");
         }
@@ -190,9 +170,11 @@ class MyBroadcastReceiver extends BroadcastReceiver {
             //discovery finishes, dismiss progress dialog
             if ( !deviceFound ) {
                 Log.d(BrewingProcess.TAG, "Device not found.");
+                unregister( context );
                 activity.finish();
             }
             Log.d(BrewingProcess.TAG, "Discovery Completed");
+            unregister( context );
         } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
             //bluetooth device found
             BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);

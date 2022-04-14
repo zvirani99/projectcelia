@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -101,37 +102,41 @@ public class BrewFragment extends Fragment {
                 return;
             }
 
-            // Get Data from Database and pass onto new intent
-            Map<String, Object> brew = new HashMap<>();
-
-            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy", Locale.US);
-            String currentDate = sdf.format(new Date());
-            sdf = new SimpleDateFormat("HH:mm:ss", Locale.US);
-            String currentTime = sdf.format(new Date());
-
-            brew.put(DataHandler.DB_USER_ID, FirebaseAuth.getInstance().getCurrentUser().getUid());
-            brew.put(DataHandler.DB_DATE, currentDate);
-            brew.put(DataHandler.DB_TIME, currentTime);
-            brew.put(DataHandler.DB_ROAST_TYPE, getSelectedRoast());
-            brew.put(DataHandler.DB_CUP_SIZE, getSelectedSize());
-            brew.put(DataHandler.DB_RATING, "null");
-
             DocumentReference docRef = FirebaseFirestore.getInstance().collection("users")
                     .document(FirebaseAuth.getInstance().getCurrentUser().getUid());
             docRef.get().addOnSuccessListener(documentSnapshot -> {
+                // Get Data from Database and pass onto new intent
+                Map<String, Object> brew = new HashMap<>();
+
+                SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy", Locale.US);
+                String currentDate = sdf.format(new Date());
+                sdf = new SimpleDateFormat("HH:mm:ss", Locale.US);
+                String currentTime = sdf.format(new Date());
+
+                brew.put(DataHandler.DB_USER_ID, FirebaseAuth.getInstance().getCurrentUser().getUid());
+                brew.put(DataHandler.DB_DATE, currentDate);
+                brew.put(DataHandler.DB_TIME, currentTime);
+                brew.put(DataHandler.DB_ROAST_TYPE, getSelectedRoast());
+                brew.put(DataHandler.DB_CUP_SIZE, getSelectedSize());
+                brew.put(DataHandler.DB_RATING, "null");
+
                 String next_temp = (String) documentSnapshot.get("next_target_temperature");
                 String next_sat = (String) documentSnapshot.get("next_target_saturation");
                 brew.put(DataHandler.DB_TEMPERATURE, next_temp);
                 brew.put(DataHandler.DB_TARGET_SATURATION, next_sat);
+
+                // Calculate target temps and sats from cindy's algorithm
+
+                // Store this into database
+                fsInstance.collection("brews").add(brew);
+
+                // Create extra for intents
+                Intent i = new Intent(getActivity().getApplicationContext(), BrewingProcess.class);
+                i.putExtra(BrewingProcess.TAG_TEMPERATURE, next_temp);
+                i.putExtra(BrewingProcess.TAG_TARGET_SATURATION, next_sat);
+                startActivity( i );
             });
 
-            // Calculate target temps and sats from cindy's algorithm
-
-            // Store this into database
-            fsInstance.collection("brews").add(brew);
-
-            // Create extra for intents
-            startActivity(new Intent(getActivity().getApplicationContext(), BrewingProcess.class));
         });
 
         return view;
