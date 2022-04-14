@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if ( PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
-                .getBoolean( "notifications_darklight_mode", true) ) {
+                .getBoolean( "notifications_darklight_mode", false) ) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
