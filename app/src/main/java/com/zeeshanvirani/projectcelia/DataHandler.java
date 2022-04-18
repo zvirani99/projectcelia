@@ -23,6 +23,7 @@ public class DataHandler {
     public static String DB_DATE = "date";
     public static String DB_TIME = "time";
     public static String DB_ROAST_TYPE = "roast_type";
+    public static String DB_BEAN_TYPE = "bean_type";
     public static String DB_CUP_SIZE = "cup_size";
     public static String DB_RATING = "rating";
     public static String DB_TEMPERATURE = "temperature";

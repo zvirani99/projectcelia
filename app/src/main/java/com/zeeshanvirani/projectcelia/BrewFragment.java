@@ -40,6 +40,11 @@ public class BrewFragment extends Fragment {
     private Button cupsize_med_btn;
     private Button cupsize_large_btn;
 
+    private Button beantype_arabica;
+    private Button beantype_robusta;
+    private Button beantype_liberica;
+    private Button beantype_excelsa;
+
     private Button start_brew_btn;
 
     private TextView heading_name;
@@ -48,6 +53,7 @@ public class BrewFragment extends Fragment {
 
     private Button[] roastTypeButtons;
     private Button[] cupSizeButtons;
+    private Button[] beanTypeButtons;
 
     // Required empty public constructor
     public BrewFragment() {}
@@ -72,8 +78,14 @@ public class BrewFragment extends Fragment {
         cupsize_med_btn = view.findViewById(R.id.button_cupsize_16oz);
         cupsize_large_btn = view.findViewById(R.id.button_cupsize_20oz);
 
+        beantype_arabica = view.findViewById(R.id.button_beantype_arabica);
+        beantype_robusta = view.findViewById(R.id.button_beantype_robusta);
+        beantype_liberica = view.findViewById(R.id.button_beantype_liberica);
+        beantype_excelsa = view.findViewById(R.id.button_beantype_excelsa);
+
         roastTypeButtons = new Button[]{roast_light_btn, roast_medium_btn, roast_mediumdark_btn, roast_dark_btn};
         cupSizeButtons = new Button[]{cupsize_small_btn, cupsize_med_btn, cupsize_large_btn};
+        beanTypeButtons = new Button[]{beantype_arabica, beantype_robusta, beantype_liberica, beantype_excelsa};
 
         start_brew_btn = view.findViewById(R.id.button_startbrew);
         //start_brew_btn.setEnabled(DataHandler.DEVICE_CONNECTED);
@@ -95,10 +107,15 @@ public class BrewFragment extends Fragment {
         cupsize_med_btn.setOnClickListener(view1 -> adjustSizeButtons(1));
         cupsize_large_btn.setOnClickListener(view1 -> adjustSizeButtons(2));
 
+        beantype_arabica.setOnClickListener(view1 -> adjustBeanTypeButtons(0));
+        beantype_robusta.setOnClickListener(view1 -> adjustBeanTypeButtons(1));
+        beantype_liberica.setOnClickListener(view1 -> adjustBeanTypeButtons(2));
+        beantype_excelsa.setOnClickListener(view1 -> adjustBeanTypeButtons(3));
+
         start_brew_btn.setOnClickListener(view1 -> {
 
-            if ( getSelectedRoast().equals("") || getSelectedSize().equals("") ) {
-                Log.d(TAG, "Roast or Size not selected.");
+            if ( getSelectedRoast().equals("") || getSelectedSize().equals("") || getSelectedBeanType().equals("") ) {
+                Log.d(TAG, "Roast, Bean Type, or Size not selected.");
                 return;
             }
 
@@ -117,6 +134,7 @@ public class BrewFragment extends Fragment {
                 brew.put(DataHandler.DB_DATE, currentDate);
                 brew.put(DataHandler.DB_TIME, currentTime);
                 brew.put(DataHandler.DB_ROAST_TYPE, getSelectedRoast());
+                brew.put(DataHandler.DB_BEAN_TYPE, getSelectedBeanType());
                 brew.put(DataHandler.DB_CUP_SIZE, getSelectedSize());
                 brew.put(DataHandler.DB_RATING, "null");
 
@@ -184,6 +202,17 @@ public class BrewFragment extends Fragment {
         }
     }
 
+    // AdjustBeanTypeButtons
+    // Inputs: selButton (int); Which button was clicked
+    // 0 = arabica, 1 = robusta, 2 = liberica, 3 = excelsa
+    // Selects button if unselected
+    // All other buttons are unselected
+    public void adjustBeanTypeButtons( int selButton ) {
+        for ( int i = 0; i < beanTypeButtons.length; i++ ) {
+            beanTypeButtons[i].setSelected( i == selButton & !beanTypeButtons[i].isSelected() );
+        }
+    }
+
     // Converts any pixel value to dp and returns it
     public int dpToPx(int dp) {
         assert getActivity() != null;
@@ -202,6 +231,13 @@ public class BrewFragment extends Fragment {
 
     public String getSelectedSize() {
         for ( Button x : cupSizeButtons ) {
+            if ( x.isSelected() ) return x.getText().toString();
+        }
+        return "";
+    }
+
+    public String getSelectedBeanType() {
+        for ( Button x : beanTypeButtons ) {
             if ( x.isSelected() ) return x.getText().toString();
         }
         return "";
