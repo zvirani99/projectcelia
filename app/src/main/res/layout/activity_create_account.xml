@@ -62,6 +62,7 @@
             />
 
     </com.google.android.material.textfield.TextInputLayout>
+
     <!--    Email Textbox-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_textbox_layout"
@@ -131,7 +132,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!--    Login Button-->
+    <!--    Create Account Button-->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/createaccount_button"
         android:layout_width="match_parent"
