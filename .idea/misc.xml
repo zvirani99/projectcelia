@@ -15,6 +15,7 @@
         <entry key="app/src/main/res/layout/brew_history_card.xml" value="0.13148148148148148" />
         <entry key="app/src/main/res/layout/dialog_change_password.xml" value="0.26639344262295084" />
         <entry key="app/src/main/res/layout/dialog_device_information.xml" value="0.2453125" />
+        <entry key="app/src/main/res/layout/dialog_rate_brew.xml" value="0.2453125" />
         <entry key="app/src/main/res/layout/fragment_brew.xml" value="0.24074074074074073" />
         <entry key="app/src/main/res/layout/fragment_connect_device.xml" value="0.24074074074074073" />
         <entry key="app/src/main/res/layout/fragment_history.xml" value="0.2074074074074074" />
