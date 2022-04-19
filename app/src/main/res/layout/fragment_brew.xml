@@ -32,8 +32,8 @@
 
     <ImageView
         android:id="@+id/coffeecup"
-        android:layout_width="143dp"
-        android:layout_height="120dp"
+        android:layout_width="96dp"
+        android:layout_height="75dp"
         android:layout_below="@id/firstname"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
@@ -144,7 +144,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_beantype_arabica"
-            android:layout_width="70dp"
+            android:layout_width="55dp"
             android:layout_height="60dp"
             android:layout_margin="10dp"
             android:backgroundTint="@drawable/brew_buttons_background"
@@ -152,7 +152,7 @@
             android:elevation="30dp"
             android:text="Arabica"
             android:letterSpacing="0"
-            android:textSize="14sp"
+            android:textSize="10sp"
             android:textColor="@drawable/brew_buttons_text"
             app:cornerRadius="16dp"
             app:strokeColor="@color/secondary"
@@ -160,7 +160,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_beantype_robusta"
-            android:layout_width="70dp"
+            android:layout_width="55dp"
             android:layout_height="60dp"
             android:layout_margin="10dp"
             android:layout_toEndOf="@id/button_beantype_arabica"
@@ -169,7 +169,7 @@
             android:elevation="30dp"
             android:text="Robusta"
             android:letterSpacing="0"
-            android:textSize="14sp"
+            android:textSize="10sp"
             android:textColor="@drawable/brew_buttons_text"
             app:cornerRadius="16dp"
             app:strokeColor="@color/secondary"
@@ -177,7 +177,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_beantype_liberica"
-            android:layout_width="70dp"
+            android:layout_width="55dp"
             android:layout_height="60dp"
             android:layout_margin="10dp"
             android:layout_toEndOf="@id/button_beantype_robusta"
@@ -186,7 +186,7 @@
             android:elevation="30dp"
             android:text="Liberica"
             android:letterSpacing="0"
-            android:textSize="14sp"
+            android:textSize="10sp"
             android:textColor="@drawable/brew_buttons_text"
             app:cornerRadius="16dp"
             app:strokeColor="@color/secondary"
@@ -194,7 +194,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_beantype_excelsa"
-            android:layout_width="70dp"
+            android:layout_width="55dp"
             android:layout_height="60dp"
             android:layout_margin="10dp"
             android:layout_toEndOf="@id/button_beantype_liberica"
@@ -203,7 +203,7 @@
             android:elevation="30dp"
             android:text="Excelsa"
             android:letterSpacing="0"
-            android:textSize="14sp"
+            android:textSize="10sp"
             android:textColor="@drawable/brew_buttons_text"
             app:cornerRadius="16dp"
             app:strokeColor="@color/secondary"
