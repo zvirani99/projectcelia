@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -39,7 +40,7 @@ public class RateDialogFragment extends DialogFragment {
         view = getLayoutInflater().inflate( R.layout.dialog_rate_brew, null );
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireActivity(), R.style.Theme_ProjectCelia_MaterialAlertDialog);
         builder.setMessage("Rate this brew:")
-                .setPositiveButton("Submit", (dialog, id) -> {} )
+                .setPositiveButton("Submit", null )
                 .setNegativeButton("Cancel", (dialog, id) -> dialog.dismiss() )
                 .setView( view );
         return builder.create();
@@ -67,10 +68,13 @@ public class RateDialogFragment extends DialogFragment {
 
             Button positiveButton = dialog.getButton(Dialog.BUTTON_POSITIVE);
             positiveButton.setOnClickListener(v -> {
-
                 if ( getSelectedStrength().equals("") ) {
                     Log.d(TAG, "No Strength Selected.");
                     // Display error to user
+                    Snackbar.make( requireActivity().findViewById(R.id.brew_history_list),
+                            "You must select how strong this brew was.",
+                            Snackbar.LENGTH_SHORT)
+                            .show();
                     return;
                 }
 
