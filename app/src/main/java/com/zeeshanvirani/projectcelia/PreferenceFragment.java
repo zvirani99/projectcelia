@@ -118,7 +118,7 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
         if (visitwebsite_preference != null) {
             visitwebsite_preference.setOnPreferenceClickListener(preference -> {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("http://www.zeeshanvirani.com/")); // CREATE ONE PAGE SITE FOR FAQ AND CONTACT INFO
+                intent.setData(Uri.parse("http://www.zeeshanvirani.com/coffee/faq.html")); // CREATE ONE PAGE SITE FOR FAQ AND CONTACT INFO
                 startActivity(intent);
                 return true;
             });
