@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -18,6 +19,8 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 public class CreateAccountActivity extends AppCompatActivity {
+
+    private static final String TAG = "ProjectCelia:CreateAccountActivity";
 
     private TextInputEditText name_textbox;
     private TextInputEditText email_textbox;
@@ -79,31 +82,42 @@ public class CreateAccountActivity extends AppCompatActivity {
                 return;
             }
 
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email_textbox.getText().toString(), password_textbox.getText().toString())
-                .addOnCompleteListener(this, task -> {
-                    assert FirebaseAuth.getInstance().getCurrentUser() != null;
-                    if (task.isSuccessful()) { // Account creation success
+            // Check if email exists
+            FirebaseAuth.getInstance().fetchSignInMethodsForEmail( email_textbox.getText().toString() ).addOnCompleteListener( task -> {
+                Log.d(TAG, "Gathered " + task.getResult().getSignInMethods().size() + " existing logins for " + email_textbox.getText().toString() );
 
-                        Map<String, Object> data = new HashMap<>();
-                        data.put("name", name_textbox.getText().toString());
-                        data.put("notifyBrewingStatus", true );
-                        data.put("notifyMaintenanceReminders", true );
-                        data.put("next_target_temperature", "200");
-                        data.put("next_target_saturation", "50");
+                if ( task.getResult().getSignInMethods().size() == 0 ) {
+                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(email_textbox.getText().toString(), password_textbox.getText().toString())
+                            .addOnCompleteListener(this, task2 -> {
+                                assert FirebaseAuth.getInstance().getCurrentUser() != null;
+                                if (task2.isSuccessful()) { // Account creation success
 
-                        FirebaseFirestore.getInstance().collection("users")
-                                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                .set(data, SetOptions.merge());
+                                    Map<String, Object> data = new HashMap<>();
+                                    data.put("name", name_textbox.getText().toString());
+                                    data.put("notifyBrewingStatus", true );
+                                    data.put("notifyMaintenanceReminders", true );
+                                    data.put("next_target_temperature", "200");
+                                    data.put("next_target_saturation", "50");
 
-                        DataHandler.updateSharedPreferences( getApplicationContext() );
+                                    FirebaseFirestore.getInstance().collection("users")
+                                            .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                            .set(data, SetOptions.merge());
 
-                        startActivity( new Intent(getApplicationContext(), MainActivity.class) );
-                        finishAffinity();
-                    } else { // Account creation failed
-                        Toast.makeText(getApplicationContext(), "Account creation failed. Try again later.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+                                    DataHandler.updateSharedPreferences( getApplicationContext() );
+
+                                    startActivity( new Intent(getApplicationContext(), MainActivity.class) );
+                                    finishAffinity();
+                                } else { // Account creation failed
+                                    Toast.makeText(getApplicationContext(), "Account creation failed. Try again later.",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                } else {
+                    Toast.makeText(getApplicationContext(), "Email already exists. Go back to log in or use another email.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+
         });
 
     }
