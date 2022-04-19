@@ -19,6 +19,9 @@ public class LaunchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
 
+        // Create notification channel
+        DataHandler.createNotificationChannel( this );
+
         // Check if user is already logged in
         if ( FirebaseAuth.getInstance().getCurrentUser() != null ) {
             DataHandler.updateSharedPreferences( getApplicationContext() );
