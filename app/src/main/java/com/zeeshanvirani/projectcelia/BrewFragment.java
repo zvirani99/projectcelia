@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -116,6 +117,10 @@ public class BrewFragment extends Fragment {
 
             if ( getSelectedRoast().equals("") || getSelectedSize().equals("") || getSelectedBeanType().equals("") ) {
                 Log.d(TAG, "Roast, Bean Type, or Size not selected.");
+                Snackbar.make( requireActivity().findViewById(R.id.button_roast_dark ),
+                        "You must select a roast type, bean type, and cup size.",
+                        Snackbar.LENGTH_SHORT)
+                        .show();
                 return;
             }
 
