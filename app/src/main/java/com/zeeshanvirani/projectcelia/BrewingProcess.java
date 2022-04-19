@@ -171,7 +171,8 @@ class MyBroadcastReceiver extends BroadcastReceiver {
             if ( !deviceFound ) {
                 Log.d(BrewingProcess.TAG, "Device not found.");
                 unregister( context );
-                activity.finish();
+                activity.brewing_text.setText( "Device not found." );
+                activity.returnhome_btn.setVisibility( View.VISIBLE );
             }
             Log.d(BrewingProcess.TAG, "Discovery Completed");
             unregister( context );
