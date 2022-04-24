@@ -95,6 +95,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         app:startIconDrawable="@drawable/ic_lock"
+        app:passwordToggleEnabled="true"
         android:hint="Password"
         style="@style/Theme.ProjectCelia.TextInputLayout"
         >
@@ -119,6 +120,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         app:startIconDrawable="@drawable/ic_lock"
+        app:passwordToggleEnabled="true"
         android:hint="Confirm Password"
         style="@style/Theme.ProjectCelia.TextInputLayout"
         >
