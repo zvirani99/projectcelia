@@ -31,25 +31,7 @@ public class BrewFragment extends Fragment {
 
     private static final String TAG = "ProjectCelia:BrewFragment";
 
-    // Define views
-    private Button roast_light_btn;
-    private Button roast_medium_btn;
-    private Button roast_mediumdark_btn;
-    private Button roast_dark_btn;
-
-    private Button cupsize_small_btn;
-    private Button cupsize_med_btn;
-    private Button cupsize_large_btn;
-
-    private Button beantype_arabica;
-    private Button beantype_robusta;
-    private Button beantype_liberica;
-    private Button beantype_excelsa;
-
-    private Button start_brew_btn;
-
-    private TextView heading_name;
-
+    // Define global variables
     private final FirebaseFirestore fsInstance = FirebaseFirestore.getInstance();
 
     private Button[] roastTypeButtons;
@@ -70,27 +52,27 @@ public class BrewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_brew, container, false);
 
         // Initialize views within ViewGroup
-        roast_light_btn = view.findViewById(R.id.button_roast_light);
-        roast_medium_btn = view.findViewById(R.id.button_roast_medium);
-        roast_mediumdark_btn = view.findViewById(R.id.button_roast_mediumdark);
-        roast_dark_btn = view.findViewById(R.id.button_roast_dark);
+        Button roast_light_btn = view.findViewById(R.id.button_roast_light);
+        Button roast_medium_btn = view.findViewById(R.id.button_roast_medium);
+        Button roast_mediumdark_btn = view.findViewById(R.id.button_roast_mediumdark);
+        Button roast_dark_btn = view.findViewById(R.id.button_roast_dark);
 
-        cupsize_small_btn = view.findViewById(R.id.button_cupsize_8oz);
-        cupsize_med_btn = view.findViewById(R.id.button_cupsize_16oz);
-        cupsize_large_btn = view.findViewById(R.id.button_cupsize_20oz);
+        Button cupsize_small_btn = view.findViewById(R.id.button_cupsize_8oz);
+        Button cupsize_med_btn = view.findViewById(R.id.button_cupsize_16oz);
+        Button cupsize_large_btn = view.findViewById(R.id.button_cupsize_20oz);
 
-        beantype_arabica = view.findViewById(R.id.button_beantype_arabica);
-        beantype_robusta = view.findViewById(R.id.button_beantype_robusta);
-        beantype_liberica = view.findViewById(R.id.button_beantype_liberica);
-        beantype_excelsa = view.findViewById(R.id.button_beantype_excelsa);
+        Button beantype_arabica = view.findViewById(R.id.button_beantype_arabica);
+        Button beantype_robusta = view.findViewById(R.id.button_beantype_robusta);
+        Button beantype_liberica = view.findViewById(R.id.button_beantype_liberica);
+        Button beantype_excelsa = view.findViewById(R.id.button_beantype_excelsa);
 
         roastTypeButtons = new Button[]{roast_light_btn, roast_medium_btn, roast_mediumdark_btn, roast_dark_btn};
         cupSizeButtons = new Button[]{cupsize_small_btn, cupsize_med_btn, cupsize_large_btn};
         beanTypeButtons = new Button[]{beantype_arabica, beantype_robusta, beantype_liberica, beantype_excelsa};
 
-        start_brew_btn = view.findViewById(R.id.button_startbrew);
+        Button start_brew_btn = view.findViewById(R.id.button_startbrew);
 
-        heading_name = view.findViewById(R.id.firstname);
+        TextView heading_name = view.findViewById(R.id.firstname);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity().getApplicationContext());
         String fullName = sharedPreferences.getString("account_name", "");
         heading_name.setText( fullName.split(" ")[0] );

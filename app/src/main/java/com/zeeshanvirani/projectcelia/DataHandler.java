@@ -1,13 +1,10 @@
 package com.zeeshanvirani.projectcelia;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -53,8 +50,16 @@ public class DataHandler {
 
         docRef.get().addOnSuccessListener(documentSnapshot -> {
             String name = (String) documentSnapshot.get("name");
-            boolean notifyBrewingStatus = (boolean) documentSnapshot.get("notifyBrewingStatus");
-            boolean notifyMaintenanceReminders = (boolean) documentSnapshot.get("notifyMaintenanceReminders");
+            Object notifyBrewingStatus_Object = documentSnapshot.get("notifyBrewingStatus");
+            Object notifyMaintenanceReminders_Object = documentSnapshot.get("notifyMaintenanceReminders");
+            boolean notifyBrewingStatus = true;
+            boolean notifyMaintenanceReminders = true;
+            if ( notifyBrewingStatus_Object == null || notifyMaintenanceReminders_Object == null ) {
+                Log.d(TAG, "notifyBrewingStatus or notifyMaintenanceReminders returned null. Using default value of true.");
+            } else {
+                notifyBrewingStatus = (boolean) notifyBrewingStatus_Object;
+                notifyMaintenanceReminders = (boolean) notifyMaintenanceReminders_Object;
+            }
             editor.putString("account_name", name);
             editor.putBoolean( "notifications_brewing_status", notifyBrewingStatus);
             editor.putBoolean( "notifications_maintenance_reminders", notifyMaintenanceReminders);

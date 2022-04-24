@@ -10,11 +10,4 @@ public class TempDatabaseClass {
     public static String[] brewHistory_strength = new String[]{"", "", "", "", "", "", "", "", ""};
     // END
 
-    // Account Data : START
-    public static String[] userid = new String[]{"1", "2"};
-    public static String[] email = new String[]{"admin@admin.com", "user@user.com"};
-    public static String[] passwords = new String[]{"admin", "user"};
-    public static String[] deviceID = new String[]{"1234", "5678"};
-    // END
-
 }

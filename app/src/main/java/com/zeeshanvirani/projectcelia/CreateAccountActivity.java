@@ -85,6 +85,10 @@ public class CreateAccountActivity extends AppCompatActivity {
 
             // Check if email exists
             FirebaseAuth.getInstance().fetchSignInMethodsForEmail( email_textbox.getText().toString() ).addOnCompleteListener( task -> {
+                if ( task.getResult().getSignInMethods() == null ) {
+                    Log.d(TAG, "getSignInMethods returned null.");
+                    return;
+                }
                 Log.d(TAG, "Gathered " + task.getResult().getSignInMethods().size() + " existing logins for " + email_textbox.getText().toString() );
 
                 if ( task.getResult().getSignInMethods().size() == 0 ) {

@@ -52,11 +52,6 @@ public class BluetoothSocketHandler {
         }
     }
 
-    // Returns the socket
-    public BluetoothSocket getSocket() {
-        return this.btSocket;
-    }
-
     // Closes the input and output streams and the socket itself to close the bluetooth connection
     public void closeSocket() {
         try {
