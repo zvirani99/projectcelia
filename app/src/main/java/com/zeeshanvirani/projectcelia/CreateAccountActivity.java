@@ -32,6 +32,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
+        // Initialize views
         name_textbox = findViewById(R.id.name_textbox);
         email_textbox = findViewById(R.id.email_textbox);
         password_textbox = findViewById(R.id.password_textbox);
@@ -50,7 +51,7 @@ public class CreateAccountActivity extends AppCompatActivity {
             if ( name_textbox.getText() == null
                     || email_textbox.getText() == null
                     || password_textbox.getText() == null
-                    || confirmpassword_textbox.getText() == null ) { // Text boxes are empty
+                    || confirmpassword_textbox.getText() == null ) { // Text boxes are null
 
                 // Display error message and have user retry
                 Toast.makeText(getApplicationContext(), "Fields cannot be null.",
@@ -92,6 +93,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 assert FirebaseAuth.getInstance().getCurrentUser() != null;
                                 if (task2.isSuccessful()) { // Account creation success
 
+                                    // Data to store in database
                                     Map<String, Object> data = new HashMap<>();
                                     data.put("name", name_textbox.getText().toString());
                                     data.put("notifyBrewingStatus", true );

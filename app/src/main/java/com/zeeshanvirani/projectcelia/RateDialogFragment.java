@@ -13,11 +13,6 @@ import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class RateDialogFragment extends DialogFragment {
 
@@ -50,12 +45,15 @@ public class RateDialogFragment extends DialogFragment {
     public void onResume() {
         super.onResume();
         final AlertDialog dialog = (AlertDialog) getDialog();
+        // Check if dialog is null
         if ( dialog != null ) {
 
+            // Set min and max values for the number picker
             NumberPicker rating = view.findViewById(R.id.rate_rating_np);
             rating.setMinValue(0);
             rating.setMaxValue(10);
 
+            // Initialize views
             Button strength_weak = view.findViewById(R.id.button_strength_weak);
             Button strength_perfect = view.findViewById(R.id.button_strength_perfect);
             Button strength_strong = view.findViewById(R.id.button_strength_strong);
@@ -68,6 +66,7 @@ public class RateDialogFragment extends DialogFragment {
 
             Button positiveButton = dialog.getButton(Dialog.BUTTON_POSITIVE);
             positiveButton.setOnClickListener(v -> {
+                // Check if a strength button is selected
                 if ( getSelectedStrength().equals("") ) {
                     Log.d(TAG, "No Strength Selected.");
                     // Display error to user
@@ -91,12 +90,14 @@ public class RateDialogFragment extends DialogFragment {
         }
     }
 
+    // Handles selection and deselection of buttons
     public void adjustStrengthButtons( int selButton ) {
         for ( int i = 0; i < strengthTypeButtons.length; i++ ) {
             strengthTypeButtons[i].setSelected( i == selButton & !strengthTypeButtons[i].isSelected() );
         }
     }
 
+    // Returns String of strength selected
     // 0 = weak, 1 = perfect, 2 = strong
     public String getSelectedStrength() {
         for ( int i = 0; i < strengthTypeButtons.length; i++ ) {

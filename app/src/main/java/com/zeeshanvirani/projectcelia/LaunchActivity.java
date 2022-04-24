@@ -24,6 +24,7 @@ public class LaunchActivity extends AppCompatActivity {
 
         // Check if user is already logged in
         if ( FirebaseAuth.getInstance().getCurrentUser() != null ) {
+            // User is logged in
             DataHandler.updateSharedPreferences( getApplicationContext() );
             startActivity(new Intent(this, MainActivity.class));
             finish();

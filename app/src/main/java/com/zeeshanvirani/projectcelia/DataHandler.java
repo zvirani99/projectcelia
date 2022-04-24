@@ -81,6 +81,7 @@ public class DataHandler {
         Log.d(TAG, "Created Notification Channel with id " + CHANNEL_ID);
     }
 
+    // Sends notification to user
     public static void sendNotification( Activity activity, String textTitle, String textContent, int notificationId ) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_lock)

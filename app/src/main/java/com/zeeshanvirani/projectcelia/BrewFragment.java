@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +30,8 @@ import java.util.Map;
 public class BrewFragment extends Fragment {
 
     private static final String TAG = "ProjectCelia:BrewFragment";
-    // Define view variables
+
+    // Define views
     private Button roast_light_btn;
     private Button roast_medium_btn;
     private Button roast_mediumdark_btn;
@@ -50,7 +50,7 @@ public class BrewFragment extends Fragment {
 
     private TextView heading_name;
 
-    private FirebaseFirestore fsInstance = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore fsInstance = FirebaseFirestore.getInstance();
 
     private Button[] roastTypeButtons;
     private Button[] cupSizeButtons;
@@ -89,10 +89,9 @@ public class BrewFragment extends Fragment {
         beanTypeButtons = new Button[]{beantype_arabica, beantype_robusta, beantype_liberica, beantype_excelsa};
 
         start_brew_btn = view.findViewById(R.id.button_startbrew);
-        //start_brew_btn.setEnabled(DataHandler.DEVICE_CONNECTED);
 
         heading_name = view.findViewById(R.id.firstname);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity().getApplicationContext());
         String fullName = sharedPreferences.getString("account_name", "");
         heading_name.setText( fullName.split(" ")[0] );
 
@@ -115,51 +114,53 @@ public class BrewFragment extends Fragment {
 
         start_brew_btn.setOnClickListener(view1 -> {
 
-            if ( getSelectedRoast().equals("") || getSelectedSize().equals("") || getSelectedBeanType().equals("") ) {
+            // Check if all brewing options are selected
+            if (getSelectedRoast().equals("") || getSelectedSize().equals("") || getSelectedBeanType().equals("")) {
                 Log.d(TAG, "Roast, Bean Type, or Size not selected.");
-                Snackbar.make( requireActivity().findViewById(R.id.button_roast_dark ),
+                Snackbar.make(requireActivity().findViewById(R.id.button_roast_dark),
                         "You must select a roast type, bean type, and cup size.",
                         Snackbar.LENGTH_SHORT)
                         .show();
                 return;
             }
 
-            DocumentReference docRef = FirebaseFirestore.getInstance().collection("users")
-                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid());
-            docRef.get().addOnSuccessListener(documentSnapshot -> {
-                // Get Data from Database and pass onto new intent
-                Map<String, Object> brew = new HashMap<>();
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                DocumentReference docRef = FirebaseFirestore.getInstance().collection("users")
+                        .document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                docRef.get().addOnSuccessListener(documentSnapshot -> {
+                    // Get Data from Database and pass onto new intent
+                    Map<String, Object> brew = new HashMap<>();
 
-                SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy", Locale.US);
-                String currentDate = sdf.format(new Date());
-                sdf = new SimpleDateFormat("HH:mm:ss", Locale.US);
-                String currentTime = sdf.format(new Date());
+                    SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy", Locale.US);
+                    String currentDate = sdf.format(new Date());
+                    sdf = new SimpleDateFormat("HH:mm:ss", Locale.US);
+                    String currentTime = sdf.format(new Date());
 
-                brew.put(DataHandler.DB_USER_ID, FirebaseAuth.getInstance().getCurrentUser().getUid());
-                brew.put(DataHandler.DB_DATE, currentDate);
-                brew.put(DataHandler.DB_TIME, currentTime);
-                brew.put(DataHandler.DB_ROAST_TYPE, getSelectedRoast());
-                brew.put(DataHandler.DB_BEAN_TYPE, getSelectedBeanType());
-                brew.put(DataHandler.DB_CUP_SIZE, getSelectedSize());
-                brew.put(DataHandler.DB_RATING, "null");
+                    brew.put(DataHandler.DB_USER_ID, FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    brew.put(DataHandler.DB_DATE, currentDate);
+                    brew.put(DataHandler.DB_TIME, currentTime);
+                    brew.put(DataHandler.DB_ROAST_TYPE, getSelectedRoast());
+                    brew.put(DataHandler.DB_BEAN_TYPE, getSelectedBeanType());
+                    brew.put(DataHandler.DB_CUP_SIZE, getSelectedSize());
+                    brew.put(DataHandler.DB_RATING, "null");
 
-                String next_temp = (String) documentSnapshot.get("next_target_temperature");
-                String next_sat = (String) documentSnapshot.get("next_target_saturation");
-                brew.put(DataHandler.DB_TEMPERATURE, next_temp);
-                brew.put(DataHandler.DB_TARGET_SATURATION, next_sat);
+                    String next_temp = (String) documentSnapshot.get("next_target_temperature");
+                    String next_sat = (String) documentSnapshot.get("next_target_saturation");
+                    brew.put(DataHandler.DB_TEMPERATURE, next_temp);
+                    brew.put(DataHandler.DB_TARGET_SATURATION, next_sat);
 
-                // Calculate target temps and sats from cindy's algorithm
+                    // Calculate target temps and sats from cindy's algorithm
 
-                // Store this into database
-                fsInstance.collection("brews").add(brew);
+                    // Store this into database
+                    fsInstance.collection("brews").add(brew);
 
-                // Create extra for intents
-                Intent i = new Intent(getActivity().getApplicationContext(), BrewingProcess.class);
-                i.putExtra(BrewingProcess.TAG_TEMPERATURE, next_temp);
-                i.putExtra(BrewingProcess.TAG_TARGET_SATURATION, next_sat);
-                startActivity( i );
-            });
-
+                    // Create extra for intents
+                    Intent i = new Intent(requireActivity().getApplicationContext(), BrewingProcess.class);
+                    i.putExtra(BrewingProcess.TAG_TEMPERATURE, next_temp);
+                    i.putExtra(BrewingProcess.TAG_TARGET_SATURATION, next_sat);
+                    startActivity(i);
+                });
+            }
         });
 
         return view;
@@ -227,6 +228,7 @@ public class BrewFragment extends Fragment {
         return Math.round((float) dp * density);
     }
 
+    // Returns String of selected roast
     public String getSelectedRoast() {
         for ( Button x : roastTypeButtons ) {
             if ( x.isSelected() ) return x.getText().toString();
@@ -234,6 +236,7 @@ public class BrewFragment extends Fragment {
         return "";
     }
 
+    // Returns String of selected cup size
     public String getSelectedSize() {
         for ( Button x : cupSizeButtons ) {
             if ( x.isSelected() ) return x.getText().toString();
@@ -241,6 +244,7 @@ public class BrewFragment extends Fragment {
         return "";
     }
 
+    // Returns String of selected Bean Type
     public String getSelectedBeanType() {
         for ( Button x : beanTypeButtons ) {
             if ( x.isSelected() ) return x.getText().toString();

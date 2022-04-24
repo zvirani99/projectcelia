@@ -3,8 +3,6 @@ package com.zeeshanvirani.projectcelia;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
-import com.google.android.material.internal.ToolbarUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -22,6 +20,7 @@ public class BluetoothSocketHandler {
     private OutputStream outputStream;
     private InputStream inputStream;
 
+    // Constructor
     public BluetoothSocketHandler( BrewingProcess instance, BluetoothSocket btSocket,
                                    String target_temp, String target_saturation ) {
         this.bpInstance = instance;
@@ -37,6 +36,8 @@ public class BluetoothSocketHandler {
         }
     }
 
+    // Establishes a connection using the socket provided
+    // Starts the brewing process by sending the start message to the Pi
     private void createConnection() {
         try {
             Log.d(TAG, "Connecting to Bluetooth Device.");
@@ -51,11 +52,13 @@ public class BluetoothSocketHandler {
         }
     }
 
+    // Returns the socket
     public BluetoothSocket getSocket() {
         return this.btSocket;
     }
 
-    public boolean closeSocket() {
+    // Closes the input and output streams and the socket itself to close the bluetooth connection
+    public void closeSocket() {
         try {
             Thread.sleep(1000);
             Log.d(TAG, "Closing Bluetooth Socket");
@@ -66,13 +69,12 @@ public class BluetoothSocketHandler {
             outputStream = null;
             btSocket.close();
             DataHandler.DEVICE_CONNECTED = false;
-            return true;
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-            return false;
         }
     }
 
+    // Sends the "msgToSend" to the Pi
     public void sendMessage(String msgToSend ) {
         try {
             outputStream.write( msgToSend.getBytes() );
@@ -81,6 +83,7 @@ public class BluetoothSocketHandler {
         }
     }
 
+    // InputStream for the bluetooth connection that constantly reads
     public class InputStreamThread extends Thread {
         public void run() {
             byte[] inBuffer = new byte[1024];
@@ -95,8 +98,7 @@ public class BluetoothSocketHandler {
                     Log.d(TAG, readMessage);
                     bpInstance.runOnUiThread(() -> bpInstance.statusUpdate(readMessage));
                 } catch (IOException e) {
-                    Log.d(TAG, "Input Stream was Disconnect. " + e);
-                    //closeSocket();
+                    Log.d(TAG, "Input Stream was Disconnected. " + e);
                     break;
                 }
             }

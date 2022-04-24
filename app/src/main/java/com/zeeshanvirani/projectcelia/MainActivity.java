@@ -12,16 +12,20 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Check if dark mode is enabled
         if ( PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
                 .getBoolean( "notifications_darklight_mode", false) ) {
+            // Dark mode enabled
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
+            // Dark mode disabled
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
 
+        // Bottom navigation setup
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if ( item.getItemId() == R.id.history ) {
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
+        // If activity is restarted, go to settings
         if ( savedInstanceState != null ) {
             bottomNavigationView.setSelectedItemId( R.id.settings );
         } else {

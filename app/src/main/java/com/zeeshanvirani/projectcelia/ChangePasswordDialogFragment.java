@@ -25,12 +25,16 @@ public class ChangePasswordDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        // Get layout for dialog
         view = getLayoutInflater().inflate( R.layout.dialog_change_password, null );
+
+        // Setup dialog builder
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireActivity(), R.style.Theme_ProjectCelia_MaterialAlertDialog);
         builder.setMessage("Enter your new password.")
                 .setPositiveButton("Submit", (dialog, id) -> {} )
                 .setNegativeButton("Cancel", (dialog, id) -> dialog.dismiss() )
                 .setView( view );
+
         return builder.create();
     }
 
@@ -38,11 +42,15 @@ public class ChangePasswordDialogFragment extends DialogFragment {
     public void onResume() {
         super.onResume();
         final AlertDialog dialog = (AlertDialog) getDialog();
+
+        // Check if dialog is null
         if ( dialog != null ) {
             Button positiveButton = dialog.getButton(Dialog.BUTTON_POSITIVE);
             positiveButton.setOnClickListener(v -> {
+                // Submit button clicked
                 EditText password = view.findViewById(R.id.chpw_password);
                 EditText confirmpassword = view.findViewById(R.id.chpw_confpassword);
+                // Check if both password fields match
                 if (password.getText().equals(confirmpassword.getText())) {
                     assert FirebaseAuth.getInstance().getCurrentUser() != null;
                     FirebaseAuth.getInstance().getCurrentUser().updatePassword( password.getText().toString() )

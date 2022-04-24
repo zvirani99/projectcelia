@@ -2,7 +2,6 @@ package com.zeeshanvirani.projectcelia;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
@@ -12,7 +11,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +19,6 @@ import android.widget.TextView;
 import com.google.android.material.button.MaterialButton;
 
 import java.io.IOException;
-import java.util.UUID;
 
 public class BrewingProcess extends AppCompatActivity {
 
@@ -44,29 +41,30 @@ public class BrewingProcess extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brewing_process);
 
+        // Get extras from Intent
         Intent i = getIntent();
-
         temperature = i.getStringExtra(TAG_TEMPERATURE);
         target_saturation = i.getStringExtra(TAG_TARGET_SATURATION);
 
+        // Initialize views
         brewing_text = findViewById(R.id.brewing_text);
         returnhome_btn = findViewById(R.id.brewing_gohome);
 
+        // End activity on return button clicked
         returnhome_btn.setOnClickListener(view -> finish());
 
+        // Setup broadcast Receivers
         myReceiver = new MyBroadcastReceiver(this);
-        // Setup Bluetooth Connection
         int CONSTANT = 0;
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, CONSTANT);
 
-        // Get master database and gather information
-        // Connect to Coffee Maker using Bluetooth
+        // Check if device is already connected, if not register broadcast receiver for bluetooth
         if (!DataHandler.DEVICE_CONNECTED) {
             IntentFilter filter = new IntentFilter();
             filter.addAction(BluetoothDevice.ACTION_FOUND);
             filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
             filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-            Intent tempI = myReceiver.register(this, filter); // register
+            myReceiver.register(this, filter); // register
             startPairing();
         }
 
@@ -74,39 +72,44 @@ public class BrewingProcess extends AppCompatActivity {
 
     }
 
+    // Called when messages received from bluetooth input stream
     public void statusUpdate( String newStatus ) {
-        brewing_text.setText( newStatus );
-        // Wait for confirmation
-        // Read in updates
-        // End brewing when complete
-        if ( newStatus.equals("OUT_OF_WATER") ) {
-            return;
-        } else if ( newStatus.equals("UNKNOWN_ERROR") ) {
-            return;
-        } else if ( newStatus.equals("STARTED_HEATING") ) {
-            return;
-        } else if ( newStatus.equals("STARTED_POURING") ) {
-            return;
-        } else if ( newStatus.equals("BREWING_COMPLETE") ) {
-            // DISCONNECT BLUETOOTH DEVICE
-            //myReceiver.unregister(this); // register
-            DataHandler.btSocketHandler.closeSocket();
-            DataHandler.btSocketHandler = null;
-            returnhome_btn.setVisibility( View.VISIBLE );
+        brewing_text.setText( newStatus ); // Set screen text to input stream message
+        switch (newStatus) {
+            case "OUT_OF_WATER":
+                return;
+            case "UNKNOWN_ERROR":
+                return;
+            case "STARTED_HEATING":
+                return;
+            case "STARTED_POURING":
+                return;
+            case "BREWING_COMPLETE":
+                // DISCONNECT BLUETOOTH DEVICE
+                DataHandler.btSocketHandler.closeSocket();
+                DataHandler.btSocketHandler = null;
+                returnhome_btn.setVisibility(View.VISIBLE);
+                break;
         }
 
     }
 
+    // Start bluetooth pairing process
     private void startPairing() {
         btAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        // Check if device has a bluetooth adapter
         if (btAdapter == null) return;
 
         try {
+            // Check if bluetooth is on
             if (!btAdapter.isEnabled()) {
+                // Bluetooth is off, ask user to enable
                 Log.d(TAG, "Enabled Bluetooth Adapter");
                 Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivity(turnOn);
             }
+            // Check if bluetooth is already in discoverable mode, if yes: cancel discovery
             if ( btAdapter.isDiscovering() ) btAdapter.cancelDiscovery();
             Log.d(TAG, String.valueOf(btAdapter.startDiscovery()));
         } catch (SecurityException e ) {
@@ -114,6 +117,7 @@ public class BrewingProcess extends AppCompatActivity {
         }
     }
 
+    // Creates a bluetooth socket for "device"
     public void establishHandler( BluetoothDevice device ) {
         try {
             // Get a BluetoothSocket to connect with the given BluetoothDevice.
@@ -131,7 +135,7 @@ public class BrewingProcess extends AppCompatActivity {
 class MyBroadcastReceiver extends BroadcastReceiver {
 
     public boolean isRegistered;
-    private BrewingProcess activity;
+    private final BrewingProcess activity;
 
     private boolean deviceFound = false;
 
@@ -139,28 +143,24 @@ class MyBroadcastReceiver extends BroadcastReceiver {
         this.activity = activity;
     }
 
-    public Intent register(Context context, IntentFilter filter) {
+    // Registers the broadcast receiver with the system
+    public void register(Context context, IntentFilter filter) {
         try {
             Log.d(BrewingProcess.TAG, "Registered Receiver Adapter");
-            return !isRegistered
-                    ? context.registerReceiver(this, filter)
-                    : null;
+            context.registerReceiver(this, filter);
         } finally {
             isRegistered = true;
         }
     }
-    public boolean unregister(Context context) {
-        Log.d(BrewingProcess.TAG, "Unregistered Receiver Adapter");
-        return isRegistered
-                && unregisterInternal(context);
-    }
 
-    private boolean unregisterInternal(Context context) {
+    // Unregisters the receiver from the system
+    public void unregister(Context context) {
+        Log.d(BrewingProcess.TAG, "Unregistered Receiver Adapter");
         context.unregisterReceiver(this);
         isRegistered = false;
-        return true;
     }
 
+    // Called for any event the receiver is filtered for
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {

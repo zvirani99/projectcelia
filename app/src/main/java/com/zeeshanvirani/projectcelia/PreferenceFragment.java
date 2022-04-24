@@ -30,7 +30,6 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "in OnResume");
         if ( getPreferenceScreen().getSharedPreferences() == null ) return;
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
@@ -38,17 +37,13 @@ public class PreferenceFragment extends PreferenceFragmentCompat implements Shar
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(TAG, "in OnPause");
         if ( getPreferenceScreen().getSharedPreferences() == null ) return;
         getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
 
-
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
-
-        Log.d(TAG, "in OnCreatePreferences");
 
         if ( getContext() == null ) {
             Log.d(TAG, "No Context");

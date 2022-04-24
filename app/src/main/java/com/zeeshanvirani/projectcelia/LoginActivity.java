@@ -79,6 +79,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // Determines if a provided string (email) is a valid email
+    // Input: String
+    // Returns: Boolean
     public static boolean isValidEmail( String email ) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
                 "[a-zA-Z0-9_+&*-]+)*@" +
