@@ -2,11 +2,9 @@ package com.zeeshanvirani.projectcelia;
 
 import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
