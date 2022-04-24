@@ -32,5 +32,9 @@
     <!-- BrewingProcess -->
     <string name="brewingprocess_cannotfinddevice">Cannot find Device</string>
 
+    <!-- DialogChangePassword -->
+    <string name="dialogchangepassword_newpassword">New Password</string>
+    <string name="dialogchangepassword_confirmnewpassword">Confirm New Password</string>
+
 
 </resources>
