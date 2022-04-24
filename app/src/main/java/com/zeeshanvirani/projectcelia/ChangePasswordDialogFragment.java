@@ -2,9 +2,11 @@ package com.zeeshanvirani.projectcelia;
 
 import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -50,6 +52,17 @@ public class ChangePasswordDialogFragment extends DialogFragment {
                 // Submit button clicked
                 EditText password = view.findViewById(R.id.chpw_password);
                 EditText confirmpassword = view.findViewById(R.id.chpw_confpassword);
+                // Check if fields are empty
+                if ( password.getText().toString().equals("") ) {
+                    Log.d(TAG, "Password field cannot be empty.");
+                    password.setError( "Password cannot be empty" );
+                    return;
+                }
+                if ( confirmpassword.getText().toString().equals("") ) {
+                    Log.d(TAG, "Confirm Password field cannot be empty.");
+                    confirmpassword.setError( "Confirm Password cannot be empty" );
+                    return;
+                }
                 // Check if both password fields match
                 if (password.getText().equals(confirmpassword.getText())) {
                     assert FirebaseAuth.getInstance().getCurrentUser() != null;
@@ -64,8 +77,8 @@ public class ChangePasswordDialogFragment extends DialogFragment {
                     dialog.dismiss();
                 } else {
                     Log.d(TAG, "Entered passwords do not match.");
-                    password.setError( "Password does not match" );
-                    confirmpassword.setError( "Password does not match" );
+                    password.setError( "Passwords do not match" );
+                    confirmpassword.setError( "Passwords do not match" );
                 }
             });
         }
