@@ -170,7 +170,6 @@ class MyBroadcastReceiver extends BroadcastReceiver {
             //discovery finishes, dismiss progress dialog
             if ( !deviceFound ) {
                 Log.d(BrewingProcess.TAG, "Device not found.");
-                unregister( context );
                 activity.brewing_text.setText( R.string.brewingprocess_cannotfinddevice );
                 activity.returnhome_btn.setVisibility( View.VISIBLE );
             }
