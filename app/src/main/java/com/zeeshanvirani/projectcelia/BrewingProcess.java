@@ -55,8 +55,6 @@ public class BrewingProcess extends AppCompatActivity {
 
         // Setup broadcast Receivers
         myReceiver = new MyBroadcastReceiver(this);
-        int CONSTANT = 0;
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, CONSTANT);
 
         // Check if device is already connected, if not register broadcast receiver for bluetooth
         if (!DataHandler.DEVICE_CONNECTED) {
