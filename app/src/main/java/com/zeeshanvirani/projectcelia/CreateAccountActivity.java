@@ -94,7 +94,6 @@ public class CreateAccountActivity extends AppCompatActivity {
                 if ( task.getResult().getSignInMethods().size() == 0 ) {
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email_textbox.getText().toString(), password_textbox.getText().toString())
                             .addOnCompleteListener(this, task2 -> {
-                                assert FirebaseAuth.getInstance().getCurrentUser() != null;
                                 if (task2.isSuccessful()) { // Account creation success
 
                                     // Data to store in database
@@ -134,10 +133,8 @@ public class CreateAccountActivity extends AppCompatActivity {
                 "[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
                 "A-Z]{2,7}$";
-
-        Pattern pat = Pattern.compile(emailRegex);
-        if (email == null)
-            return false;
-        return pat.matcher(email).matches();
+        Pattern pat = Pattern.compile( emailRegex );
+        if ( email == null ) return false;
+        return pat.matcher( email ).matches();
     }
 }
